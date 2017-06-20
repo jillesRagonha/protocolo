@@ -18,7 +18,7 @@ public class DocumentoDao  implements Serializable{
             manager.getTransaction().begin();
             manager.persist(documento);
             manager.getTransaction().commit();
-            inserido = false;
+            inserido = true;
         } catch (Exception e) {
             e.printStackTrace();
         }

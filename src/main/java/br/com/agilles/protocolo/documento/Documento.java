@@ -1,6 +1,7 @@
 package br.com.agilles.protocolo.documento;
 
 import br.com.agilles.protocolo.departamento.Departamento;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,15 +16,17 @@ public class Documento implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long idDocumento;
-
-    @ElementCollection(targetClass = TipoDocumento.class)
     @Enumerated(EnumType.STRING)
-    private List<TipoDocumento> tipoDocumentos;
+    private TipoDocumento tipoDocumento;
+    @NotEmpty(message = "Número de documento obrigatório")
     private String numeroDocumento;
     private Date dataDocumento;
-
+    private String origem;
+    private String assunto;
+    private String remetente;
     @OneToOne
     private Departamento departamento;
+
 
     public Long getIdDocumento() {
         return idDocumento;
@@ -33,12 +36,12 @@ public class Documento implements Serializable {
         this.idDocumento = idDocumento;
     }
 
-    public List<TipoDocumento> getTipoDocumentos() {
-        return tipoDocumentos;
+    public TipoDocumento getTipoDocumento() {
+        return tipoDocumento;
     }
 
-    public void setTipoDocumentos(List<TipoDocumento> tipoDocumentos) {
-        this.tipoDocumentos = tipoDocumentos;
+    public void setTipoDocumento(TipoDocumento tipoDocumento) {
+        this.tipoDocumento = tipoDocumento;
     }
 
     public String getNumeroDocumento() {
@@ -64,4 +67,30 @@ public class Documento implements Serializable {
     public void setDepartamento(Departamento departamento) {
         this.departamento = departamento;
     }
+
+
+    public String getOrigem() {
+        return origem;
+    }
+
+    public void setOrigem(String origem) {
+        this.origem = origem;
+    }
+
+    public String getAssunto() {
+        return assunto;
+    }
+
+    public void setAssunto(String assunto) {
+        this.assunto = assunto;
+    }
+
+    public String getRemetente() {
+        return remetente;
+    }
+
+    public void setRemetente(String remetente) {
+        this.remetente = remetente;
+    }
 }
+
