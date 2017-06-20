@@ -1,0 +1,57 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:pa="http://primefaces.org/barcelona">
+
+    <div class="layout-sidebar #{guestPreferences.darkMenu ? 'layout-sidebar-dark': ''}">
+        <pa:tabMenu>
+            <pa:tab icon="home" title="Configurações">
+                <h:form id="menu-form">
+                    <pa:menu widgetVar="me">
+                        <p:menuitem id="um_dashboard" value="Home" icon="&#xE871;" outcome="/home"/>
+                        <p:submenu id="um_customization1" label="Menu" icon="&#xE8B8;">
+                            <p:menuitem id="menu1" value="Menu Claro" icon="&#xE893;"
+                                        actionListener="#{guestPreferences.setDarkMenu(false)}" ajax="false"/>
+                            <p:menuitem id="menu2" value="Menu Escuro" icon="&#xE892;"
+                                        actionListener="#{guestPreferences.setDarkMenu(true)}" ajax="false"/>
+                        </p:submenu>
+                    </pa:menu>
+                </h:form>
+            </pa:tab>
+
+            <pa:tab icon="inbox" title="Bandeja">
+                <h:form id="bandeja_form">
+                    <pa:menu widgetVar="me">
+                        <p:menuitem id="menu_bandeja" value="Bandeja" icon="inbox" />
+                        <p:submenu id="submenu_bandeja" label="Opções" icon="&#xE8B8;">
+                            <p:menuitem id="menu_bandeja_novo" value="Novo Documento" icon="archive"
+                                        outcome="/home" ajax="false"/>
+                            <p:menuitem id="menu_bandeja_procurar" value="Olhar Minha Bandeja" icon="folder"
+                                        ajax="false"/>
+                        </p:submenu>
+                    </pa:menu>
+                </h:form>
+
+            </pa:tab>
+            <pa:tab icon="domain" title="Departamentos">
+            <h:form id="store">
+                <pa:menu widgetVar="me">
+                    <p:menuitem id="menu_store" value="Departamentos" icon="domain" />
+                    <p:submenu id="submenu_store" label="Opções" icon="&#xE8B8;">
+                        <p:menuitem id="menuItem_store" value="Novo Departamento" icon="plus_one"
+                                    outcome="/departamento/cadastro_departamento" ajax="false"/>
+                        <p:menuitem id="menu_store_procurar" value="Ver Departamentos" icon="search" outcome="/departamento/ver_departamentos"
+                                    ajax="false"/>
+                    </p:submenu>
+                </pa:menu>
+            </h:form>
+            </pa:tab>
+
+
+        </pa:tabMenu>
+    </div>
+
+</ui:composition>

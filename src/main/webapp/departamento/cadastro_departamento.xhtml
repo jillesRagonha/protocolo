@@ -1,0 +1,55 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">..........:::::::::Cadastro de Departamentos::::::::..............</ui:define>
+
+    <ui:define name="head">
+        <style type="text/css">
+            .ui-selectoneradio.ui-grid-responsive .ui-grid-col-4,
+            .ui-selectmanycheckbox.ui-grid-responsive .ui-grid-col-4 {
+                padding-bottom: 10px;
+            }
+        </style>
+    </ui:define>
+
+    <ui:define name="content">
+        <div class="ui-g ui-fluid">
+            <div class="ui-g-8 ui-lg-6">
+                <!-- Left Side -->
+                <div class="card card-w-title">
+                    <h1>Criar Novo Departamento</h1>
+                    <div>
+                        <h:form id="form_cadastrar_departamento">
+                            <p:messages autoUpdate="true" id="msg" />
+                            <p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                                <h:panelGroup styleClass="md-inputfield ">
+                                    <p:inputText value="#{departamentoBean.departamento.nomeDepartamento}"/>
+                                    <label>Nome do Departamento</label>
+                                </h:panelGroup>
+                                <h:panelGroup styleClass="md-inputfield myIconClass">
+                                    <p:inputText value="#{departamentoBean.departamento.email}"/>
+                                    <label>Email</label>
+                                </h:panelGroup>
+                                <h:panelGroup styleClass="md-inputfield myIconClass">
+                                    <p:inputText value="#{departamentoBean.departamento.pessoaResponsavel}" />
+                                    <label>Pessoa Responsável</label>
+                                </h:panelGroup>
+                                <p:commandButton value="Gravar" action="#{departamentoBean.criarDepartamento}"
+                                                 update="form_cadastrar_departamento"/>
+                            </p:panelGrid>
+                        </h:form>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </ui:define>
+
+</ui:composition>
