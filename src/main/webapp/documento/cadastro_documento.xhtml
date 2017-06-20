@@ -1,0 +1,90 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">..........:::::::::Recepção de Documentos::::::::..............</ui:define>
+
+    <ui:define name="head">
+        <style type="text/css">
+            .ui-selectoneradio.ui-grid-responsive .ui-grid-col-4,
+            .ui-selectmanycheckbox.ui-grid-responsive .ui-grid-col-4 {
+                padding-bottom: 10px;
+            }
+        </style>
+    </ui:define>
+
+    <ui:define name="content">
+        <div class="ui-g ui-fluid">
+            <div class="ui-g-12 ui-lg-6">
+                <!-- Left Side -->
+                <div class="card card-w-title">
+                    <h1>Bandeja</h1>
+                    <div>
+                        <h:form id="form_tipoDocumento">
+                            <p:messages autoUpdate="true" id="msgTipo"/>
+
+                            <h1>Tipo de Documento</h1>
+                            <p:selectOneRadio layout="responsive" columns="3">
+                                <f:selectItem itemLabel="Ofício" itemValue="Xbox One"/>
+                                <f:selectItem itemLabel="Relatório Comunicação" itemValue="PS+"/>
+                                <f:selectItem itemLabel="Processo" itemValue="Wii U"/>
+                                <f:selectItem itemLabel="Comunicação Interna" itemValue="Xbox One"/>
+                                <f:selectItem itemLabel="Outros" itemValue="PS+"/>
+                            </p:selectOneRadio>
+                        </h:form>
+
+                    </div>
+                </div>
+
+
+                <div class="card card-w-title">
+
+                    <h1>Dados</h1>
+
+                    <p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank grid-pad"
+                                 style="margin-top:10px" >
+                        <p:outputLabel for="button" value="Data:" />
+                        <p:calendar id="button" showOn="button" pattern="dd/mm/yyyy"  />
+                    </p:panelGrid>
+
+                    <p:panelGrid columns="2" styleClass="form-group ui-panelgrid-blank" layout="grid">
+
+
+                        <h:panelGroup styleClass="md-inputfield ">
+                            <p:inputText/>
+                            <label>Nº Documento</label>
+                        </h:panelGroup>
+
+                        <h:panelGroup styleClass="md-inputfield ">
+                            <p:inputText/>
+                            <label>Origem</label>
+                        </h:panelGroup>
+
+                        <h:panelGroup styleClass="md-inputfield ">
+                            <p:inputText/>
+                            <label>Assunto</label>
+                        </h:panelGroup>
+
+                        <h:panelGroup styleClass="md-inputfield ">
+                            <p:inputText/>
+                            <label>Entregue Por</label>
+                        </h:panelGroup>
+                        <p:commandButton value="Inserir" style="margin-top: 10px" />
+
+                    </p:panelGrid>
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+    </ui:define>
+
+</ui:composition>

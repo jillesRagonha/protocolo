@@ -1,0 +1,279 @@
+/* Utils */
+.clearfix:after {
+    content:" ";
+    display:block;
+    clear:both;
+}
+
+.card {
+    @include content-shadow();
+    @include border-radius(2px);
+    background: #ffffff;
+    padding: 16px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+    
+    &.card-w-title {
+        padding-bottom: 26px;
+    }
+    
+    h1 {
+        font-weight: normal;
+        font-size: 22px;
+        margin: 22px 0;
+        
+        &:first-child {
+            margin-top: 0;
+        }
+    }
+    
+    h2 {
+        font-weight: normal;
+        font-size: 20px;
+    }
+    
+    h3 {
+        font-weight: normal;
+        font-size: 18px;
+    }
+    
+    h4 {
+        font-weight: normal;
+        font-size: 16px;
+    }
+}
+
+.nopad {
+    padding: 0;
+    
+    .ui-panel-content {
+        padding: 0;
+    }
+}
+
+@-webkit-keyframes fadeInDown {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -20px, 0);
+    transform: translate3d(0, -20px, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -20px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@-webkit-keyframes fadeOutUp {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -20px, 0);
+    transform: translate3d(0, -20px, 0);
+  }
+}
+
+@keyframes fadeOutUp {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -20px, 0);
+    transform: translate3d(0, -20px, 0);
+  }
+}
+
+.ui-shadow-1 {
+    -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.ui-shadow-2 {
+    -webkit-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    -moz-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.ui-shadow-3 {
+    -webkit-box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    -moz-box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.ui-shadow-4 {
+    -webkit-box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    -moz-box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.ui-shadow-5 {
+    -webkit-box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+    -moz-box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
+
+.ui-shadow-content {
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 2px 1px -1px rgba(0,0,0,.12);
+    -webkit-box-shadow: 0 1px 3px 0 rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 2px 1px -1px rgba(0,0,0,.12);
+    -moz-box-shadow: 0 1px 3px 0 rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 2px 1px -1px rgba(0,0,0,.12);
+    border: 0 none !important;
+}
+
+.ui-g {
+    &.form-group {
+        > div {
+            padding: 12px 16px;
+        }
+    }
+}
+
+.ui-panelgrid {
+    &.form-group {
+        .ui-panelgrid-cell {
+            padding: 12px 16px;
+        }
+    }
+}
+
+.ui-selectoneradio, .ui-selectmanycheckbox  {
+    &.form-group {
+        .ui-grid-row > div {
+            padding: 8px 16px;
+        }
+    }
+}
+
+/* 
+ * New Grid CSS
+ * Only necessary to add if your PrimeFaces version is older than 5.3.14
+ */
+.ui-g {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    flex-wrap: wrap;
+}
+            
+.ui-g:after {
+    clear: both;
+    content: "";
+    display: table;
+}
+    
+body {
+    .ui-g-1,
+    .ui-g-2,
+    .ui-g-3,
+    .ui-g-4,
+    .ui-g-5,
+    .ui-g-6,
+    .ui-g-7,
+    .ui-g-8,
+    .ui-g-9,
+    .ui-g-10,
+    .ui-g-11,
+    .ui-g-12 {
+        padding: 0.65em;
+    }
+}        
+
+
+@media screen and (max-width: 40em) {
+    body {
+        .ui-sm-1,
+        .ui-sm-2,
+        .ui-sm-3,
+        .ui-sm-4,
+        .ui-sm-5,
+        .ui-sm-6,
+        .ui-sm-7,
+        .ui-sm-8,
+        .ui-sm-9,
+        .ui-sm-10,
+        .ui-sm-11,
+        .ui-sm-12 {
+            padding: 0.65em;
+        }
+    }
+    
+}
+
+@media screen and (min-width: 40.063em) {
+    body {
+        .ui-md-1,
+        .ui-md-2,
+        .ui-md-3,
+        .ui-md-4,
+        .ui-md-5,
+        .ui-md-6,
+        .ui-md-7,
+        .ui-md-8,
+        .ui-md-9,
+        .ui-md-10,
+        .ui-md-11,
+        .ui-md-12 {
+            padding: 0.65em;
+        }    
+    }
+}
+
+@media screen and (min-width: 64.063em) {
+    body {
+        .ui-lg-1,
+        .ui-lg-2,
+        .ui-lg-3,
+        .ui-lg-4,
+        .ui-lg-5,
+        .ui-lg-6,
+        .ui-lg-7,
+        .ui-lg-8,
+        .ui-lg-9,
+        .ui-lg-10,
+        .ui-lg-11,
+        .ui-lg-12 {
+            padding: 0.65em;
+        }
+    }
+    
+}
+
+@media screen and (min-width: 90.063em) {
+    body {
+        .ui-xl-1,
+        .ui-xl-2,
+        .ui-xl-3,
+        .ui-xl-4,
+        .ui-xl-5,
+        .ui-xl-6,
+        .ui-xl-7,
+        .ui-xl-8,
+        .ui-xl-9,
+        .ui-xl-10,
+        .ui-xl-11,
+        .ui-xl-12 {
+            padding: 0.65em;
+        }
+    }
+}
+

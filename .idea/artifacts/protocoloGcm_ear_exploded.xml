@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-ear" name="protocoloGcm:ear exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/protocoloGcm_ear_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="protocoloGcm/javaeeApplication/javaEEApplication" />
+    </root>
+  </artifact>
+</component>

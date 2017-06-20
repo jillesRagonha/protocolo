@@ -1,0 +1,285 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">Documentation</ui:define>
+    
+    <ui:define name="head">
+        <style type="text/css">
+            .docs h1 {
+                margin-top: 30px;
+            }
+            
+            .docs pre {
+                font-family: monospace;
+                background-color: #545b61;
+                color: #ffffff;
+                padding: 1em;
+                font-size: 14px;
+                border-radius: 3px;
+                overflow: auto;
+            }
+            
+            .video-container {
+                position: relative;
+                width: 100%;
+                height: 0;
+                padding-bottom: 56.25%;
+            }
+            .video-container iframe {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+            }
+        </style>
+    </ui:define>
+
+    <ui:define name="content">
+    
+        <div class="ui-g">
+            <div class="ui-g-12">
+                <div class="card docs">                    
+                    <h1>Layout</h1>
+                    <p>Barcelona utilizes <a href="http://docs.oracle.com/javaee/6/tutorial/doc/giqxp.html">JSF templating APIs</a> and provides a main template.xhtml along with additional <i>topbar</i>, <i>menu</i>, <i>footer</i> fragments for the base layout. 
+                        These xhtml files must be placed under WEB-INF folder and client pages should reference the template.xhtml as their template. 
+                        Provided empty.xhtml is a sample content page using the main template.xhtml that defines "content" as the main ui:define placeholder. By default template defines 3 placeholders 
+                        (page title, header content and actual content)to insert content and you can add more as per your requirements.</p>
+                        
+                    <p>Sample page below uses the main template from Barcelona.</p>
+<pre>
+&lt;ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml"&gt;
+                
+    &lt;ui:define name="title"&gt;Test Page&lt;/ui:define&gt;
+
+    &lt;ui:define name="content"&gt;
+        Content goes here
+    &lt;/ui:define&gt;
+&lt;/ui:composition&gt;
+</pre>
+                    
+                    <p>Other required resources are the css, js and images that are located inside resources/barcelona-layout folder, simply copy the barcelona-layout folder to your %WEB-APP-FOLDER%/resources folder 
+                        so that final path would be %WEB-APP-FOLDER%/resources/barcelona-layout/. Please refer to demo app or maven project of the demo app as the reference.</p>
+                    
+                    <h1>Theme</h1>    
+                    <p>Barcelona provides 10 PrimeFaces themes out of the box, setup of a theme simple as including the theme jar in your classpath and defining primefaces.THEME context parameter in web.xml such as "primefaces-Barcelona-green". Full list of 
+                    available themes are;</p>
+                    
+                    <ul>
+                        <li>primefaces-barcelona-blue</li>
+                        <li>primefaces-barcelona-blue-grey</li>
+                        <li>primefaces-barcelona-cyan</li>
+                        <li>primefaces-barcelona-dark-blue</li>
+                        <li>primefaces-barcelona-dark-green</li>
+                        <li>primefaces-barcelona-deep-purple</li>
+                        <li>primefaces-barcelona-green</li>
+                        <li>primefaces-barcelona-indigo</li>
+                        <li>primefaces-barcelona-light-blue</li>
+                        <li>primefaces-barcelona-teal</li>
+                    </ul>
+                    
+                    <p>A custom theme can be developed by the following steps.</p>
+                    <ul>
+                        <li>Choose a custom theme name such as primefaces-barcelona-myown.</li>
+                        <li>Create a folder named primefaces-barcelona-myown and place an empty theme.scss inside</li>
+                        <li>Copy the sass folder from the distribution to your application.</li>
+                        <li>Define the variables listed below and import the <i>/sass/theme/_theme.scss</i> file.</li>
+                        <li>Build the scss to generate css</li>
+                        <li>Set primefaces.THEME context parameter as <i>barcelona-myown</i></li>
+                        <li>Either bundle the css in a jar file or serve from webapp/resources/primefaces-barcelona-myown folder</li>
+                    </ul>
+                    
+                    <p>Here are the variables required to create a theme, you may need to change the last line according to the 
+                        relative path of the sass folder in your application.</p>
+                        
+<pre>
+$primaryColor: #1976d2;
+$primaryDarkColor: #0D47A1;
+$primaryLightColor: #2196F3;
+$primaryTextColor: #FFFFFF;
+$accentColor: #FFC107;
+$accentDarkColor: #FFA000;
+$accentLightColor: #FFECB3;
+$accentTextColor: #000000;
+
+@import '../sass/theme/_theme';
+</pre> 
+                        
+                    <p> An example sass command to compile the css would be;</p>
+                        
+<pre>
+sass src/main/webapp/resources/primefaces-barcelona-myown/theme.scss src/main/webapp/resources/primefaces-barcelona-myown/theme.css  --sourcemap=none
+</pre> 
+
+                    <p>Watch mode is handy to avoid compiling everytime when a change is made, instead use the following command
+                    so that sass generates the file whenever you make a customization. This builds all css files whenever a change is made to any scss file.</p>
+<pre>
+sass -w src/main/webapp/resources/ --sourcemap=none
+</pre> 
+
+                    <p>Same can also be applied to layout itself;</p>
+                    <ul>
+                        <li>Choose a layout name such as layout-myown.</li>
+                        <li>Create an empty file named layout-myown.scss inside resources/barcelona-layout/css folder.</li>
+                        <li>Define the variables listed below and import the <i>/sass/layout/_layout.scss</i> file.</li>
+                        <li>Build the scss to generate css</li>
+                        <li>Serve the css by importing it using a link tag or h:outputStylesheet.</li>
+                    </ul>
+                    
+                    <p>Here are the variables required to create a layout, you may need to change the last line according to the 
+                        relative path of the sass folder in your application.</p>
+                    
+<pre>
+$primaryColor:#607D8B;
+$primaryLightColor:#90A4AE;
+$primaryTextColor:#CFD8DC;
+$primaryTextHoverColor:#B0BEC5;
+$accentColor:#8BC34A;
+$accentLightColor:#DCEDC8;
+$accentTextColor:#ffffff;
+$activeMenuItemTextColor:#8BC34A;
+$darkActiveMenuItemTextColor:#8BC34A;
+$darkMenuItemTextColor:#dee0e3;
+$darkMenuItemInactiveTextColor:#757575;
+$darkMenuItemHoverBgColor:#545454;
+$darkSidemenuBgColor:#343434;
+$darkMenuBgColor:#424242;
+
+@import '../../sass/layout/_layout';
+</pre> 
+                    
+                    <p>For both cases, several .scss files such as _layout.scss, _theme.scss or _variables.scss has to be present relative to your scss files, these are available inside the sass folder in the distribution.</p>
+                    <p>In case you'd like to customize the structure not just the colors, the _variables.scss is where the structural variables (e.g. font size, paddings) for the layout are defined.</p>
+<pre>
+/* Common */
+$fontSize:14px;
+$fontFamily:"Roboto","Helvetica Neue",sans-serif;
+$lineHeight:18px;
+$textColor:#424242;
+$textSecondaryColor:#757575;
+$borderRadius:3px;
+$dividerColor:#eaeaea;
+$dividerLightColor:#f8f8f8;
+$iconWidth:20px;
+$iconHeight:20px;
+$iconFontSize:20px;
+$grayBgColor:#757575;
+$hoverBgColor:#e8e8e8;
+$hoverTextColor:#000000;
+
+/* Layout */
+$bodyBgColor:#fcfbfb;
+$menuItemHoverBgColor:#e8e8e8;
+$darkSidemenuBgColor:#343434;
+$darkMenuBgColor:#424242;
+$darkMenuItemTextColor:#dee0e3;
+$darkMenuItemHoverBgColor:#545454;
+$menuitemColor:#757575;
+$footerBgColor:#ffffff;
+
+/* Topbar */
+$topbarSubmenuBgColor:#f7f7f7;
+$topbarSubmenuItemHoverBgColor:#e3e3e3;
+
+/******************************/
+/*           THEME            */
+/******************************/
+$headerPadding:8px 14px;
+$headerTextColor:#ffffff;
+
+$contentPadding:8px 14px;
+$contentBorderColor:#d8d8d8;
+$contentBgColor:#ffffff;
+
+$inputBorderColor:#bdbdbd;
+$inputInvalidBorderColor:#e62a10;
+$inputBgColor:#ffffff;
+$inputErrorTextColor:#e62a10;
+$inputHeaderPadding:6px 10px;
+
+$buttonTextColor:#ffffff;
+
+$listItemPadding:6px 10px;
+
+$radioButtonBorderColor:#757575;
+$checkboxBorderColor:#757575;
+
+$errorMessageFontSize:11px;
+$errorMessageIconFontSize:13px;
+
+$dataTableRowBgColorEven:#f4f4f4;
+$paginatorPadding:6px 10px;
+$menuitemPadding:6px 10px;
+</pre>        
+
+                    <h1>Menu</h1>    
+                    <p>Menu is a regular JSF component that supports PrimeFaces MenuModel API allowing both declarative and programmatic approaches. 
+                    State is saved via a cookie and to remove it define a widgetVar to the menu and call PF('yourwidgetvar').clearMenuState(). To use the menu
+                    add the primefaces-barcelona-{version}.jar to your classpath and import the http://primefaces.org/barcelona namespace.</p>
+<pre>
+xmlns:pa="http://primefaces.org/barcelona">
+
+&lt;pa:tabMenu&gt;
+    &lt;pa:tab icon="fa fa-cube" title="Features"&gt;
+        &lt;h:form id="menu-form"&gt;
+            &lt;pa:menu widgetVar="menu"&gt;
+            &lt;/pa:menu&gt;
+        &lt;/h:Form&gt;
+    &lt;/pa:tab&gt;
+    &lt;pa:tab icon="fa fa-inbox" title="Inbox"&gt;
+    &lt;/pa:tab&gt;
+    &lt;pa:tab icon="fa fa-calendar-o" title="Calendar"&gt;
+    &lt;/pa:tab&gt;
+&lt;/pa:tabMenu&gt;
+</pre>  
+                    <p>Menu has 2 modes, inline and overlay. Layout wrapper element in template.xhtml is used to define which mode to use by adding specific classes. List
+                    below indicates the style classes for each mode.</p>
+                    <ul>
+                        <li>Static: Default mode</li>
+                        <li>Overlay: "layout-overlay-menu"</li>
+                    </ul>
+                    
+                    <p>For example to create an overlay menu, the div element should be in following form;</p>
+<pre>
+&lt;div class="layout-wrapper layout-overlay-menu"&gt;
+    ...
+&lt;/div&gt;
+</pre>            
+
+                    <h1>RTL</h1>
+                    <p>RTL orintetation for the layout is enabled by adding "layout-rtl" to the main layout-wrapper element.</p>
+<pre>
+&lt;div class="layout-wrapper layout-rtl"&gt;
+    ...
+&lt;/div&gt;
+</pre> 
+
+                    <h1>Utilities</h1>
+                    <p>Barcelona provides various helper features such as material iconset compatible with PrimeFaces components and helper classes. Visit <h:link outcome="utils">Utils</h:link> page for details.</p>
+
+                    <h1>Ripple Effect</h1>
+                    <p>Various elements display a ripple element on mousedown event, if you prefer to remove this effect, simply remove the ripple.js and ripple.css files from template.xhtml.</p>
+
+                    <h1>Icons</h1>
+                    <p>Barcelona Layout uses font awesome icons for layout so enable font awesome support in PrimeFaces by setting primefaces.FONT_AWESOME context parameter in web.xml as true. If your PrimeFaces version 
+                    does not have the font awesome integration, include the font-awesome manually in your application.</p>
+
+                    <h1>Grid CSS</h1>
+                    <p>Barcelona uses new PrimeFaces Grid CSS (ui-g-*) throughout the samples, we strongly suggest using Grid CSS as your layout framework as it is well tested and supported by PrimeFaces. Grid CSS 
+                    is automatically included on newer versions however if your PrimeFaces version is older than 5.3.14, add the provided grid.css file under /barcelona-layout/css/ folder to your template manually.</p> 
+                </div>
+            </div>
+        </div>
+        
+    </ui:define>
+
+</ui:composition>
