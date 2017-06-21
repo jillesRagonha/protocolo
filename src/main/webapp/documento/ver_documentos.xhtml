@@ -1,0 +1,176 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+
+    <ui:define name="head">
+
+
+        <style type="text/css">
+            .cars-datalist .text-column p:last-child {
+                color: #757575;
+            }
+
+            .cars-datalist .car-item i, .cars-datalist .car-item .car-details {
+                display: inline-block;
+                vertical-align: middle;
+            }
+
+            .cars-datalist .car-item button {
+                float: right;
+            }
+
+            .cars-datalist ul {
+                margin: 0;
+                padding: 0;
+            }
+
+            .ui-car-display td:last-child {
+                font-weight: 700;
+            }
+
+            .cars-datalist .ui-icon-directions-car {
+                font-size: 48px;
+                color: #757575;
+                margin: -28px 48px 0 24px;
+            }
+
+            @media (max-width: 640px) {
+                .cars-datalist .text-column {
+                    text-align: center;
+                }
+
+                .ui-tree-demo {
+                    width: 240px;
+                }
+
+                .cars-datalist .ui-icon-directions-car {
+                    margin-left: 10px;
+                    margin-right: 35px;
+                }
+            }
+        </style>
+    </ui:define>
+
+    <ui:define name="title">Todos Documentos</ui:define>
+    <ui:define name="content">
+
+        <div class="ui-g" style="margin: 0px auto">
+            <div class="ui-g-12">
+                <div class="card card-w-title ui-g-9">
+                    <h1>Bandeja</h1>
+
+                    <h:form id="form_data_todos_departamentos">
+                        <p:growl id="msgs" showDetail="true"/>
+
+                        <p:dataTable var="departamento" widgetVar="tabelaDepartamento" paginator="true" id="tabela"
+                                     rows="20" value="#{departamentoBean.todosDepartamentos}"
+                                     rowKey="#{departamento.id}"
+                                     emptyMessage="Nenhum Departamento que corresponde a pesquisa foi encontrado">
+
+                            <f:facet name="header">
+                                Departamentos
+                            </f:facet>
+
+                            <p:column headerText="Identificador"
+                                      sortBy="#{departamento.id}" width="15%">
+                                <p:outputLabel value=" #{departamento.id}"/>
+                            </p:column>
+
+
+                            <p:column headerText="Departamento" sortBy="#{departamento.nomeDepartamento}"
+                                      filterBy="#{departamento.nomeDepartamento}" filterMatchMode="contains">
+                                <h:outputText value="#{departamento.nomeDepartamento}"/>
+
+                            </p:column>
+
+                            <p:column headerText="Responsável" sortBy="#{departamento.pessoaResponsavel}" filterBy="#{departamento.pessoaResponsavel}" filterMatchMode="contains">
+                                #{departamento.pessoaResponsavel}
+                            </p:column>
+
+                            <p:column headerText="Email" sortBy="#{departamento.email}" filterBy="#{departamento.email}" filterMatchMode="contains">
+                                #{departamento.email}
+                            </p:column>
+
+                            <p:column headerText="Ações" width="7%">
+                                <span>
+                                    <p:commandButton process="tabela"
+                                                     update=":form_data_todos_departamentos:departamentoDetail"
+                                                     icon="ui-icon-pencil" oncomplete="PF('departamentoDialog').show()">
+                                        <f:setPropertyActionListener value="#{departamento}"
+                                                                     target="#{departamentoBean.departamentoSelecionado}"/>
+                                    </p:commandButton>
+                                </span>
+                                <span style="margin-left: 5px">
+                                <p:commandButton process="tabela"
+                                                 update=":form_remover:departamentoRemover"
+                                                 icon="ui-icon-delete" styleClass="red-btn"
+                                                 oncomplete="PF('departamentoRemove').show()">
+                                    <f:setPropertyActionListener value="#{departamento}"
+                                                                 target="#{departamentoBean.departamentoSelecionado}"/>
+                                </p:commandButton>
+                                </span>
+
+                            </p:column>
+
+
+                        </p:dataTable>
+                        <p:dialog header="Departamento" widgetVar="departamentoDialog" modal="true" showEffect="fade"
+                                  resizable="false">
+                            <p:outputPanel id="departamentoDetail" style="text-align: center;">
+                                <p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                                    <h:inputHidden value="#{departamentoBean.departamentoSelecionado.id}"/>
+                                    <h:panelGroup styleClass="md-inputfield ">
+                                        <p:inputText
+                                                value="#{departamentoBean.departamentoSelecionado.nomeDepartamento}"/>
+                                        <label>Nome do Departamento</label>
+                                    </h:panelGroup>
+                                    <h:panelGroup styleClass="md-inputfield myIconClass">
+                                        <p:inputText value="#{departamentoBean.departamentoSelecionado.email}"/>
+                                        <label>Email</label>
+                                    </h:panelGroup>
+                                    <h:panelGroup styleClass="md-inputfield myIconClass">
+                                        <p:inputText
+                                                value="#{departamentoBean.departamentoSelecionado.pessoaResponsavel}"/>
+                                        <label>Pessoa Responsável</label>
+                                    </h:panelGroup>
+                                    <p:commandButton value="Gravar" action="#{departamentoBean.alterarDepartamento}"
+                                                     id="cmdAlterar" update="@form"/>
+                                    <p:defaultCommand target="cmdAlterar"/>
+                                </p:panelGrid>
+
+                            </p:outputPanel>
+                        </p:dialog>
+
+
+                    </h:form>
+                    <h:form id="form_remover">
+
+                        <p:dialog header="Confirmação" widgetVar="departamentoRemove" modal="true" showEffect="fade"
+                                  resizable="false">
+                            <p:outputPanel id="departamentoRemover" style="text-align: center">
+                                <h:inputHidden value="#{departamentoBean.departamentoSelecionado.id}"/>
+                                Tem certeza que deseja remover o departamento
+                                <b>#{departamentoBean.departamentoSelecionado.nomeDepartamento}?</b>
+                                <br/><br/><br/>
+                                <p:commandButton value="Sim - Quero Apagar" icon="ui-icon-delete" styleClass="red-btn"
+                                                 action="#{departamentoBean.removerDepartamento}"
+                                                 update=":form_data_todos_departamentos:tabela :form_remover"/>
+                                <p:commandButton value="Não - Não quero apagar" style="margin-left: 5px"
+                                                 update="@form"/>
+                            </p:outputPanel>
+                        </p:dialog>
+                    </h:form>
+
+                </div>
+            </div>
+        </div>
+
+
+    </ui:define>
+
+
+</ui:composition>
