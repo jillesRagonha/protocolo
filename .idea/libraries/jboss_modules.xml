@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="jboss-modules">
+    <CLASSES>
+      <root url="jar://C:/wildfly-10.1.0.Final/jboss-modules.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
