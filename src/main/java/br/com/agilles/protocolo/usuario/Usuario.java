@@ -1,11 +1,9 @@
 package br.com.agilles.protocolo.usuario;
 
+import br.com.agilles.protocolo.departamento.Departamento;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -23,6 +21,8 @@ public class Usuario implements Serializable {
     @NotEmpty(message = "Obrigatório preenchimento de senha")
     private String senha;
 
+    @ManyToOne
+    private Departamento departamento;
 
     public Long getId() {
         return id;
@@ -54,6 +54,14 @@ public class Usuario implements Serializable {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public Departamento getDepartamento() {
+        return departamento;
+    }
+
+    public void setDepartamento(Departamento departamento) {
+        this.departamento = departamento;
     }
 }
 

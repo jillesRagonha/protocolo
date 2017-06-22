@@ -18,6 +18,8 @@ import java.io.Serializable;
 public class LoginBean implements Serializable {
 
     @Inject
+    private UsuarioBean usuarioBean;
+    @Inject
     private Usuario usuario;
     @Inject
     private UsuarioDao dao;
@@ -33,10 +35,9 @@ public class LoginBean implements Serializable {
      */
     public String fazerLogin() {
         if (dao.usuarioExiste(usuario)) { //verifica se o usuário existe no sistema
-            msg.criarMensagem(FacesContext.getCurrentInstance(), FacesMessage.SEVERITY_INFO, "Opa", "FUNFO");
+            usuarioBean.logar(usuario); //
             return "home?faces-redirect=true";
         } else {// caso não exista, exibe mensagem de erro para o usuário
-
             msg.criarMensagem(FacesContext.getCurrentInstance(), FacesMessage.SEVERITY_WARN, "Atenção", "Usuário ou senha incorreto");
             return "";
         }

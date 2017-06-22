@@ -63,45 +63,49 @@
                 <div class="card card-w-title ui-g-9">
                     <h1>Bandeja</h1>
 
-                    <h:form id="form_data_todos_departamentos">
+                    <h:form id="form_data_todos_documentos">
                         <p:growl id="msgs" showDetail="true"/>
 
-                        <p:dataTable var="departamento" widgetVar="tabelaDepartamento" paginator="true" id="tabela"
-                                     rows="20" value="#{departamentoBean.todosDepartamentos}"
-                                     rowKey="#{departamento.id}"
-                                     emptyMessage="Nenhum Departamento que corresponde a pesquisa foi encontrado">
+                        <p:dataTable var="doc" widgetVar="tabelaDepartamento" paginator="true" id="tabela"
+                                     rows="20" value="#{documentoBean.todosDocumentos}"
+                                     rowKey="#{doc.idDocumento}"
+                                     emptyMessage="Nenhum Documento foi encontrado">
 
                             <f:facet name="header">
-                                Departamentos
+                                Bandeja
                             </f:facet>
 
                             <p:column headerText="Identificador"
-                                      sortBy="#{departamento.id}" width="15%">
-                                <p:outputLabel value=" #{departamento.id}"/>
+                                      sortBy="#{doc.idDocumento}" width="15%">
+                                <p:outputLabel value=" #{doc.idDocumento}"/>
                             </p:column>
 
 
-                            <p:column headerText="Departamento" sortBy="#{departamento.nomeDepartamento}"
-                                      filterBy="#{departamento.nomeDepartamento}" filterMatchMode="contains">
-                                <h:outputText value="#{departamento.nomeDepartamento}"/>
+                            <p:column headerText="Tipo Documento" sortBy="#{doc.tipoDocumento.descricao}"
+                                      filterBy="#{doc.tipoDocumento.descricao}" filterMatchMode="contains">
+                                <h:outputText value="#{doc.tipoDocumento.descricao}"/>
 
                             </p:column>
 
-                            <p:column headerText="Responsável" sortBy="#{departamento.pessoaResponsavel}" filterBy="#{departamento.pessoaResponsavel}" filterMatchMode="contains">
-                                #{departamento.pessoaResponsavel}
+                            <p:column headerText="Departamento Atual" sortBy="#{doc.departamento.nomeDepartamento}" filterBy="#{doc.departamento.nomeDepartamento}" filterMatchMode="contains">
+                                #{doc.departamento.nomeDepartamento}
                             </p:column>
 
-                            <p:column headerText="Email" sortBy="#{departamento.email}" filterBy="#{departamento.email}" filterMatchMode="contains">
-                                #{departamento.email}
+                            <p:column headerText="Nº" sortBy="#{doc.numeroDocumento}" filterBy="#{doc.numeroDocumento}" filterMatchMode="contains">
+                                #{doc.numeroDocumento}
+                            </p:column>
+
+                            <p:column headerText="Assunto" sortBy="#{doc.assunto}" filterBy="#{doc.assunto}" filterMatchMode="contains">
+                                #{doc.assunto}
                             </p:column>
 
                             <p:column headerText="Ações" width="7%">
                                 <span>
                                     <p:commandButton process="tabela"
-                                                     update=":form_data_todos_departamentos:departamentoDetail"
-                                                     icon="ui-icon-pencil" oncomplete="PF('departamentoDialog').show()">
-                                        <f:setPropertyActionListener value="#{departamento}"
-                                                                     target="#{departamentoBean.departamentoSelecionado}"/>
+                                                     update=":form_data_todos_documentos:documentoDetail"
+                                                     icon="ui-icon-search" oncomplete="PF('documentoDialog').show()">
+                                        <f:setPropertyActionListener value="#{doc}"
+                                                                     target="#{documentoBean.documentoSelecionado}"/>
                                     </p:commandButton>
                                 </span>
                                 <span style="margin-left: 5px">
@@ -109,8 +113,8 @@
                                                  update=":form_remover:departamentoRemover"
                                                  icon="ui-icon-delete" styleClass="red-btn"
                                                  oncomplete="PF('departamentoRemove').show()">
-                                    <f:setPropertyActionListener value="#{departamento}"
-                                                                 target="#{departamentoBean.departamentoSelecionado}"/>
+                                    <f:setPropertyActionListener value="#{doc}"
+                                                                 target="#{documentoBean.documentoSelecionado}"/>
                                 </p:commandButton>
                                 </span>
 
@@ -118,15 +122,18 @@
 
 
                         </p:dataTable>
-                        <p:dialog header="Departamento" widgetVar="departamentoDialog" modal="true" showEffect="fade"
+                        
+                        <!-- TODO completar dialogs e decidir se será possivel edição ou não -->
+                        <p:dialog header="Documento" widgetVar="documentoDialog" modal="true" showEffect="fade"
                                   resizable="false">
-                            <p:outputPanel id="departamentoDetail" style="text-align: center;">
+                            <p:outputPanel id="documentoDetail" style="text-align: center;">
                                 <p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group">
-                                    <h:inputHidden value="#{departamentoBean.departamentoSelecionado.id}"/>
+                                    <h:inputHidden value="#{documentoBean.documentoSelecionado.idDocumento}"/>
+
                                     <h:panelGroup styleClass="md-inputfield ">
-                                        <p:inputText
-                                                value="#{departamentoBean.departamentoSelecionado.nomeDepartamento}"/>
-                                        <label>Nome do Departamento</label>
+                                        <p:inputText value="#{documentoBean.documentoSelecionado.tipoDocumento.descricao}"  disabled="true"/>
+                                        <label>Documento</label>
+
                                     </h:panelGroup>
                                     <h:panelGroup styleClass="md-inputfield myIconClass">
                                         <p:inputText value="#{departamentoBean.departamentoSelecionado.email}"/>
@@ -148,7 +155,7 @@
 
                     </h:form>
                     <h:form id="form_remover">
-
+                        <!-- TODO completar dialogs e decidir se será possivel edição ou não -->
                         <p:dialog header="Confirmação" widgetVar="departamentoRemove" modal="true" showEffect="fade"
                                   resizable="false">
                             <p:outputPanel id="departamentoRemover" style="text-align: center">
@@ -158,7 +165,7 @@
                                 <br/><br/><br/>
                                 <p:commandButton value="Sim - Quero Apagar" icon="ui-icon-delete" styleClass="red-btn"
                                                  action="#{departamentoBean.removerDepartamento}"
-                                                 update=":form_data_todos_departamentos:tabela :form_remover"/>
+                                                 update=":form_data_todos_documentos:tabela :form_remover"/>
                                 <p:commandButton value="Não - Não quero apagar" style="margin-left: 5px"
                                                  update="@form"/>
                             </p:outputPanel>
