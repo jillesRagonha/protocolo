@@ -11,7 +11,7 @@
         <div class="ui-g dashboard">
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="ui-g card overview-box overview-box-1">
-                    <span class="overview-box-name">Documentos Pendentes</span>
+                    <span class="overview-box-name">Quantidade de Processos</span>
                     <span class="overview-box-count">150</span>
                     <span class="overview-box-badge">100%</span>
                     <p:graphicImage name="images/dashboard/chart-1.svg" library="barcelona-layout"/>
@@ -20,7 +20,7 @@
 
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="ui-g card overview-box overview-box-2">
-                    <span class="overview-box-name">Documentos Despachados</span>
+                    <span class="overview-box-name">Quantidade de Relatorios</span>
                     <span class="overview-box-count">532</span>
                     <span class="overview-box-badge">+45%</span>
                     <p:graphicImage name="images/dashboard/chart-2.svg" library="barcelona-layout"/>
@@ -28,7 +28,7 @@
             </div>
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="ui-g card overview-box overview-box-3">
-                    <span class="overview-box-name">Total de Documentos</span>
+                    <span class="overview-box-name">Quantidade de Ofícios</span>
                     <span class="overview-box-count">640</span>
                     <span class="overview-box-badge">-75%</span>
                     <p:graphicImage name="images/dashboard/chart-3.svg" library="barcelona-layout"/>
@@ -36,123 +36,122 @@
             </div>
 
         </div>
-        <div class="ui-g">
-            <div class="ui-g-12">
+
+        <div class="ui-g dashboard">
+            <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <!--<div class="card card-w-title">-->
-                    <!--<h1>Bem vindo a sua Bandeja Virtual de Documentos</h1>-->
+                <!--<h1>Bem vindo a sua Bandeja Virtual de Documentos</h1>-->
 
 
-                    <div class="ui-g-4 card card-w-title " >
-                        <h2> Processos</h2>
-                        <h:form id="documentosPendentesForm">
+                <div class="ui-g-4 card card-w-title ">
+                    <h2> Processos</h2>
+                    <h:form id="processos_form">
 
-                            <div class="ui-g-12 ">
-                                <div class="shadow-box ui-shadow-3">
-
-                                    <div class="card" style="background-color: #15dff4">
-                                        <i class="fa fa-list-alt" />
-                                        <span> Processo 1234/2017</span>
-                                    </div>
-
-                                </div>
-                            </div>
-
+                        <p:repeat value="#{documentoBean.processosDashBoard}" var="processo">
                             <div class="ui-g-12">
-                                <div class="shadow-box ui-shadow-2">
-
-                                    <div class="card" style="background-color: #15dff4">
-                                        <i class="fa fa-list-alt" />
-                                        Processo 1234/2017
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div class="ui-g-12 ">
                                 <div class="shadow-box ui-shadow-3">
 
                                     <div class="card" style="background-color: #15dff4">
-                                        <i class="fa fa-list-alt" />
-                                        Processo 1234/2017
-                                    </div>
 
+                                        <div style="display: block">
+                                            <div style="float: left;">
+                                                <i class="material-icons"
+                                                   style="font-size: 18px;vertical-align: bottom;">book</i>
+                                                <span><b>Processo nº:</b> #{processo.numeroDocumento}</span>
+                                            </div>
+                                            <div style="float: right;">
+                                                <i class="material-icons"
+                                                   style="font-size: 18px; vertical-align: bottom;">place</i>
+                                                <span><b>Origem:</b> #{processo.origem}</span>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                        <div style="margin-top: 5px;">
+                                            <i class="material-icons"
+                                               style="font-size: 18px;vertical-align: bottom;">format_list_bulleted</i>
+                                            <span><b>Assunto:</b> #{processo.assunto}</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="ui-g-12 ">
+                        </p:repeat>
+                    </h:form>
+                </div>
+
+                <div class="ui-g-4 card card-w-title">
+                    <h2> Relatórios de Comunicação</h2>
+                    <h:form id="relatorios_form">
+
+                        <p:repeat value="#{documentoBean.relatoriosDashBoard}" var="relatorio">
+                            <div class="ui-g-12">
                                 <div class="shadow-box ui-shadow-3">
 
-                                    <div class="card" style="background-color: #15dff4" >
-                                        <i class="fa fa-list-alt" />
-                                        Processo 1234/2017
+                                    <div class="card" style="background-color: #1ff4d2">
+                                        <div style="display: block;">
+                                            <div style="float: left">
+                                                <i class="material-icons"
+                                                   style="font-size: 18px;vertical-align: bottom ">book</i>
+                                                <span><b>Relatório nº:</b> #{relatorio.numeroDocumento}</span>
+                                            </div>
+                                            <div style="float: right;">
+                                                <i class="material-icons"
+                                                   style="font-size: 18px; vertical-align: bottom">place</i>
+                                                <span><b>Origem:</b> #{relatorio.origem}</span>
+                                            </div>
+                                        </div>
+
+                                        <br/>
+                                        <div style="margin-top: 5px;">
+                                            <i class="material-icons"
+                                               style="font-size: 18px;vertical-align: bottom">format_list_bulleted</i>
+                                            <span><b>Assunto:</b> #{relatorio.assunto}</span>
+                                        </div>
 
                                     </div>
-
                                 </div>
                             </div>
+                        </p:repeat>
+                    </h:form>
 
-                            <div class="ui-g-12 ">
+                </div>
+                <div class="ui-g-4 card card-w-title">
+                    <h2> Ofícios</h2>
+
+                    <h:form id="oficios_form">
+
+                        <p:repeat value="#{documentoBean.oficiosDashBoard}" var="oficio">
+                            <div class="ui-g-12">
                                 <div class="shadow-box ui-shadow-3">
 
-                                    <div class="card" style="background-color: #15dff4">
-                                        <i class="fa fa-list-alt" />
-                                        Processo 1234/2017
+                                    <div class="card" style="background-color: #eff4d7">
+                                        <div style="display: block">
+                                            <div style="float: left">
+                                                <i class="material-icons"
+                                                   style="font-size: 18px;vertical-align: bottom ">book</i>
+                                                <span><b>Ofício nº:</b> #{oficio.numeroDocumento}</span>
+                                            </div>
+                                            <div style="float: right;">
+                                                <i class="material-icons"
+                                                   style="font-size: 18px; vertical-align: bottom">place</i>
+                                                <span><b>Origem:</b> #{oficio.origem}</span>
+                                            </div>
+                                        </div>
+
+                                        <br/>
+                                        <div style="margin-top: 5px;">
+                                            <i class="material-icons"
+                                               style="font-size: 18px;vertical-align: bottom">format_list_bulleted</i>
+                                            <span><b>Assunto:</b> #{oficio.assunto}</span>
+                                        </div>
+
                                     </div>
-
                                 </div>
                             </div>
-                        </h:form>
-                    </div>
-                    <div class="ui-g-4 card card-w-title">
-                        <h2> Relatórios de Comunicação</h2>
-                        <div class="ui-g-12">
-                            <div class="shadow-box ui-shadow-3">
+                        </p:repeat>
+                    </h:form>
+                </div>
 
-                                <div class="card" style="background-color: #1ff4d2">
-                                    <i class="fa fa-file-text" />
-                                    Relatório ABC
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="ui-g-12">
-                            <div class="shadow-box ui-shadow-3">
-
-                                <div class="card" style="background-color: #1ff4d2">
-                                    <i class="fa fa-file-text" />
-                                    Relatório DCE
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="ui-g-4 card card-w-title">
-                        <h2> Ofícios</h2>
-                        <div class="ui-g-12">
-                            <div class="shadow-box ui-shadow-3">
-
-                                <div class="card" style="background-color: #eff4d7">
-                                    <i class="fa fa-folder-open" />
-                                    Ofício do Ciclano
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="ui-g-12">
-                            <div class="shadow-box ui-shadow-3">
-
-                                <div class="card" style="background-color: #eff4d7">
-                                    <i class="fa fa-folder-open" />
-                                    Ofício do Ciclano
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                <!--</div>-->
             </div>
         </div>
 
