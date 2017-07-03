@@ -102,6 +102,57 @@ public class Documento implements Serializable {
     public void setStatusDocumento(StatusDocumento statusDocumento) {
         this.statusDocumento = statusDocumento;
     }
+
+    @Override
+    public String toString() {
+        return "Documento{" +
+                "idDocumento=" + idDocumento +
+                ", tipoDocumento=" + tipoDocumento +
+                ", numeroDocumento='" + numeroDocumento + '\'' +
+                ", dataDocumento=" + dataDocumento +
+                ", origem='" + origem + '\'' +
+                ", assunto='" + assunto + '\'' +
+                ", remetente='" + remetente + '\'' +
+                ", departamento=" + departamento +
+                ", statusDocumento=" + statusDocumento +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Documento documento = (Documento) o;
+
+        if (idDocumento != null ? !idDocumento.equals(documento.idDocumento) : documento.idDocumento != null)
+            return false;
+        if (tipoDocumento != documento.tipoDocumento) return false;
+        if (numeroDocumento != null ? !numeroDocumento.equals(documento.numeroDocumento) : documento.numeroDocumento != null)
+            return false;
+        if (dataDocumento != null ? !dataDocumento.equals(documento.dataDocumento) : documento.dataDocumento != null)
+            return false;
+        if (origem != null ? !origem.equals(documento.origem) : documento.origem != null) return false;
+        if (assunto != null ? !assunto.equals(documento.assunto) : documento.assunto != null) return false;
+        if (remetente != null ? !remetente.equals(documento.remetente) : documento.remetente != null) return false;
+        if (departamento != null ? !departamento.equals(documento.departamento) : documento.departamento != null)
+            return false;
+        return statusDocumento == documento.statusDocumento;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = idDocumento != null ? idDocumento.hashCode() : 0;
+        result = 31 * result + (tipoDocumento != null ? tipoDocumento.hashCode() : 0);
+        result = 31 * result + (numeroDocumento != null ? numeroDocumento.hashCode() : 0);
+        result = 31 * result + (dataDocumento != null ? dataDocumento.hashCode() : 0);
+        result = 31 * result + (origem != null ? origem.hashCode() : 0);
+        result = 31 * result + (assunto != null ? assunto.hashCode() : 0);
+        result = 31 * result + (remetente != null ? remetente.hashCode() : 0);
+        result = 31 * result + (departamento != null ? departamento.hashCode() : 0);
+        result = 31 * result + (statusDocumento != null ? statusDocumento.hashCode() : 0);
+        return result;
+    }
 }
 
 

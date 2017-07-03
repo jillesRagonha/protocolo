@@ -116,11 +116,13 @@ public class DocumentoBean implements Serializable {
     }
 
     public void despacharDocumento() {
-        documentoSelecionado.setStatusDocumento(StatusDocumento.PENDENTE);
-        documentoSelecionado.setDepartamento(departamentoParaDespacho);
-        dao.despacharDocumento(documentoSelecionado);
+        if (dao.despacharDocumento(documentoSelecionado, departamentoParaDespacho)) {
+            msg.criarMensagemSweet("swal({title: 'OK', type: 'success', html: 'O <b>" + documentoSelecionado.getTipoDocumento().getDescricao() + " nº " + documentoSelecionado.getNumeroDocumento() + "</b> foi despachado para " + departamentoParaDespacho.getNomeDepartamento() +"'})");
+
+        }
         this.documentoSelecionado = new Documento();
         this.documento = new Documento();
+        this.departamentoParaDespacho = new Departamento();
     }
 
 

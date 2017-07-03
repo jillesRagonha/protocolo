@@ -165,7 +165,7 @@
                                 <b>#{documentoBean.documentoSelecionado.tipoDocumento.descricao} nº #{documentoBean.documentoSelecionado.numeroDocumento}</b> para:
                                 <br/><br/><br/>
                                 <p:selectOneMenu id="selectDepartamento"
-                                                 value="#{documentoBean.departamentoParaDespacho}">
+                                                 value="#{documentoBean.departamentoParaDespacho}" converter="#{departamentoConverter}">
                                     <f:selectItems value="#{documentoBean.departamentos}" var="depto"
                                                    itemLabel="#{depto.nomeDepartamento}" itemValue="#{depto}" />
                                 </p:selectOneMenu>

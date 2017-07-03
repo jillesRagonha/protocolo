@@ -58,4 +58,38 @@ public class Departamento implements Serializable {
     public void setPessoaResponsavel(String pessoaResponsavel) {
         this.pessoaResponsavel = pessoaResponsavel;
     }
+
+    @Override
+    public String toString() {
+        return "Departamento{" +
+                "id=" + id +
+                ", nomeDepartamento='" + nomeDepartamento + '\'' +
+                ", pessoaResponsavel='" + pessoaResponsavel + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Departamento that = (Departamento) o;
+
+        if (id != that.id) return false;
+        if (nomeDepartamento != null ? !nomeDepartamento.equals(that.nomeDepartamento) : that.nomeDepartamento != null)
+            return false;
+        if (pessoaResponsavel != null ? !pessoaResponsavel.equals(that.pessoaResponsavel) : that.pessoaResponsavel != null)
+            return false;
+        return email != null ? email.equals(that.email) : that.email == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (nomeDepartamento != null ? nomeDepartamento.hashCode() : 0);
+        result = 31 * result + (pessoaResponsavel != null ? pessoaResponsavel.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        return result;
+    }
 }

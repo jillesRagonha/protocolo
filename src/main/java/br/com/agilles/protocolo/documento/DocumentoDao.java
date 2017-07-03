@@ -1,5 +1,6 @@
 package br.com.agilles.protocolo.documento;
 
+import br.com.agilles.protocolo.departamento.Departamento;
 import org.primefaces.barcelona.domain.Document;
 
 import javax.inject.Inject;
@@ -59,11 +60,15 @@ public class DocumentoDao implements Serializable {
         return documentos;
     }
 
-    public boolean despacharDocumento(Documento documentoSelecionado) {
+    public boolean despacharDocumento(Documento documentoSelecionado, Departamento departamentoParaDespacho) {
         boolean despachado = false;
+        Documento doc = new Documento();
         try {
             manager.getTransaction().begin();
-            manager.merge(documentoSelecionado);
+            doc = manager.find(Documento.class, documentoSelecionado.getIdDocumento());
+            doc.setDepartamento(departamentoParaDespacho);
+            doc.setStatusDocumento(StatusDocumento.PENDENTE);
+            manager.merge(doc);
             manager.getTransaction().commit();
             despachado = true;
         } catch (Exception e) {

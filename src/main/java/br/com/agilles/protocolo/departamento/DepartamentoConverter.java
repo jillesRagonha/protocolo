@@ -15,7 +15,7 @@ import javax.inject.Named;
  * Created by jille on 03/07/2017.
  */
 @Named
-@FacesConverter(forClass = Departamento.class)
+@FacesConverter(value = "departamentoConverter")
 @RequestScoped
 public class DepartamentoConverter implements Converter {
     @Inject
@@ -34,7 +34,7 @@ public class DepartamentoConverter implements Converter {
 
     @Override
     public String getAsString(FacesContext facesContext, UIComponent uiComponent, Object o) {
-        if (o instanceof Documento) {
+        if (o instanceof Departamento) {
             if(((Departamento)o).getId() != 0){
                 Departamento departamento = new Departamento();
                 departamento = (Departamento) o;
