@@ -117,8 +117,7 @@ public class DocumentoBean implements Serializable {
 
     public void despacharDocumento() {
         if (dao.despacharDocumento(documentoSelecionado, departamentoParaDespacho)) {
-            msg.criarMensagemSweet("swal({title: 'OK', type: 'success', html: 'O <b>" + documentoSelecionado.getTipoDocumento().getDescricao() + " nº " + documentoSelecionado.getNumeroDocumento() + "</b> foi despachado para " + departamentoParaDespacho.getNomeDepartamento() +"'})");
-
+            msg.criarMensagemSweet("swal({title: 'Pronto', type: 'success', html: 'O documento foi despachado'})");
         }
         this.documentoSelecionado = new Documento();
         this.documento = new Documento();
