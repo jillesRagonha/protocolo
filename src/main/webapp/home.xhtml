@@ -12,7 +12,7 @@
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="ui-g card overview-box overview-box-1">
                     <span class="overview-box-name">Quantidade de Processos</span>
-                    <span class="overview-box-count">150</span>
+                    <span class="overview-box-count">#{documentoBean.qtdeProcesso}</span>
                     <span class="overview-box-badge">100%</span>
                     <p:graphicImage name="images/dashboard/chart-1.svg" library="barcelona-layout"/>
                 </div>
@@ -21,7 +21,7 @@
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="ui-g card overview-box overview-box-2">
                     <span class="overview-box-name">Quantidade de Relatorios</span>
-                    <span class="overview-box-count">532</span>
+                    <span class="overview-box-count">#{documentoBean.qtdeRelatorio}</span>
                     <span class="overview-box-badge">+45%</span>
                     <p:graphicImage name="images/dashboard/chart-2.svg" library="barcelona-layout"/>
                 </div>
@@ -29,7 +29,7 @@
             <div class="ui-g-12 ui-md-6 ui-lg-4">
                 <div class="ui-g card overview-box overview-box-3">
                     <span class="overview-box-name">Quantidade de Ofícios</span>
-                    <span class="overview-box-count">640</span>
+                    <span class="overview-box-count">#{documentoBean.qtdeOficio}</span>
                     <span class="overview-box-badge">-75%</span>
                     <p:graphicImage name="images/dashboard/chart-3.svg" library="barcelona-layout"/>
                 </div>
@@ -39,11 +39,7 @@
 
         <div class="ui-g dashboard">
             <div class="ui-g-12 ui-md-6 ui-lg-4">
-                <!--<div class="card card-w-title">-->
-                <!--<h1>Bem vindo a sua Bandeja Virtual de Documentos</h1>-->
-
-
-                <div class="ui-g-4 card card-w-title ">
+                <div class="ui-g card card-w-title ">
                     <h2> Processos</h2>
                     <h:form id="processos_form">
 
@@ -78,8 +74,10 @@
                         </p:repeat>
                     </h:form>
                 </div>
+            </div>
 
-                <div class="ui-g-4 card card-w-title">
+            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <div class="ui-g card card-w-title">
                     <h2> Relatórios de Comunicação</h2>
                     <h:form id="relatorios_form">
 
@@ -115,15 +113,15 @@
                     </h:form>
 
                 </div>
-                <div class="ui-g-4 card card-w-title">
+            </div>
+
+            <div class="ui-g-12 ui-md-6 ui-lg-4">
+                <div class="ui-g card card-w-title">
                     <h2> Ofícios</h2>
-
                     <h:form id="oficios_form">
-
                         <p:repeat value="#{documentoBean.oficiosDashBoard}" var="oficio">
                             <div class="ui-g-12">
                                 <div class="shadow-box ui-shadow-3">
-
                                     <div class="card" style="background-color: #eff4d7">
                                         <div style="display: block">
                                             <div style="float: left">

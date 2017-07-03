@@ -1,5 +1,7 @@
 package br.com.agilles.protocolo.documento;
 
+import org.primefaces.barcelona.domain.Document;
+
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -20,6 +22,7 @@ public class DocumentoDao implements Serializable {
      * Documento que será inserido na bandeja -
      * Método responsável por abrir uma transação com o banco de dados
      * validar as informações e inseri-las no banco
+     *
      * @param documento
      * @return boolean, para saber se foi salvo com sucesso ou não
      */
@@ -36,6 +39,10 @@ public class DocumentoDao implements Serializable {
         return inserido;
     }
 
+    /**
+     * Método que traz todos os documentos já cadastrados no banco de dados
+     * @return
+     */
     public List<Documento> listarTodosDocumentos() {
         List<Documento> documentos = new ArrayList<>();
         try {
@@ -52,46 +59,21 @@ public class DocumentoDao implements Serializable {
         return documentos;
     }
 
-    public List<Documento> listarProcessosParaDashBoard() {
-        List<Documento> processos = new ArrayList<>();
-        Documento tipoD = new Documento();
+    public boolean despacharDocumento(Documento documentoSelecionado) {
+        boolean despachado = false;
         try {
-            TypedQuery<Documento> query = manager.createQuery("select d from Documento d where d.tipoDocumento = :pTipoDocumento order by d.numeroDocumento desc ", Documento.class);
-            query.setParameter("pTipoDocumento", tipoD.getTipoDocumento().PROCESSO);
-
-            processos = query.setMaxResults(4).getResultList();
+            manager.getTransaction().begin();
+            manager.merge(documentoSelecionado);
+            manager.getTransaction().commit();
+            despachado = true;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return processos;
-
+        return despachado;
     }
 
-    public List<Documento> listarRelatoriosParaDashBoard() {
-        List<Documento> relatorios = new ArrayList<>();
-        Documento tipoD = new Documento();
-        try {
-            TypedQuery<Documento> query = manager.createQuery("select d from Documento d where d.tipoDocumento = :pTipoDocumento order by d.numeroDocumento desc", Documento.class);
-            query.setParameter("pTipoDocumento", tipoD.getTipoDocumento().RC);
-            relatorios = query.setMaxResults(4).getResultList();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return relatorios;
-
-    }
-
-    public List<Documento> listarOficiosParaDashBoard() {
-        List<Documento> oficios = new ArrayList<>();
-        Documento tipoD = new Documento();
-        try {
-            TypedQuery<Documento> query = manager.createQuery("select d from Documento d where d.tipoDocumento = :pTipoDocumento order by d.numeroDocumento desc", Documento.class);
-            query.setParameter("pTipoDocumento", tipoD.getTipoDocumento().OFICIO);
-            oficios = query.setMaxResults(4).getResultList();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return oficios;
-
+    public Documento buscarDocumentoPorId(Long id) {
+        Documento documento = manager.find(Documento.class, id);
+        return documento;
     }
 }

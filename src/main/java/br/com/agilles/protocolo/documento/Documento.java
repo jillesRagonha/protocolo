@@ -14,7 +14,7 @@ import java.util.List;
 @Entity
 public class Documento implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idDocumento;
     @Enumerated(EnumType.STRING)
     private TipoDocumento tipoDocumento;
@@ -26,6 +26,8 @@ public class Documento implements Serializable {
     private String remetente;
     @OneToOne
     private Departamento departamento;
+    @Enumerated(EnumType.STRING)
+    private StatusDocumento statusDocumento;
 
 
     public Long getIdDocumento() {
@@ -92,5 +94,15 @@ public class Documento implements Serializable {
     public void setRemetente(String remetente) {
         this.remetente = remetente;
     }
+
+    public StatusDocumento getStatusDocumento() {
+        return statusDocumento;
+    }
+
+    public void setStatusDocumento(StatusDocumento statusDocumento) {
+        this.statusDocumento = statusDocumento;
+    }
 }
+
+
 

@@ -1,5 +1,7 @@
 package br.com.agilles.protocolo.documento;
 
+import br.com.agilles.protocolo.departamento.Departamento;
+import br.com.agilles.protocolo.departamento.DepartamentoDao;
 import br.com.agilles.protocolo.usuario.UsuarioBean;
 import br.com.agilles.protocolo.utils.MensagemUtil;
 import org.primefaces.context.RequestContext;
@@ -23,6 +25,13 @@ public class DocumentoBean implements Serializable {
     private DocumentoDao dao;
     @Inject
     UsuarioBean usuarioBean;
+    @Inject
+    private DepartamentoDao deptoDao;
+
+    private List<Departamento> departamentos = new ArrayList<>();
+
+
+    private int qtdeOficio = 0, qtdeRelatorio = 0, qtdeProcesso = 0;
 
     private List<Documento> todosDocumentos = new ArrayList<>();
     private Documento documentoSelecionado = new Documento();
@@ -32,15 +41,13 @@ public class DocumentoBean implements Serializable {
     private List<Documento> relatoriosDashBoard = new ArrayList<>(); // coleçao para exibir os ultimos 5 relatorios na tela inicial
 
 
-
-
     private TipoDocumento[] tipoDocumentos;
     private MensagemUtil msg = new MensagemUtil();
+    private Departamento departamentoParaDespacho;
 
 
-
-    public void verDocumentoSelecionado(Documento processo){
-        msg.criarMensagemSweet("swal({title: 'Pronto', type: 'success', html: 'O <b>" + processo.getTipoDocumento().getDescricao() + " nº " + processo.getNumeroDocumento()+ "</b> Esta aqui'})");
+    public void verDocumentoSelecionado(Documento processo) {
+        msg.criarMensagemSweet("swal({title: 'Pronto', type: 'success', html: 'O <b>" + processo.getTipoDocumento().getDescricao() + " nº " + processo.getNumeroDocumento() + "</b> Esta aqui'})");
 
     }
 
@@ -51,6 +58,7 @@ public class DocumentoBean implements Serializable {
      */
     public String inserirDocumentoBandeja() {
         documento.setDepartamento(usuarioBean.getUsuario().getDepartamento());
+        documento.setStatusDocumento(StatusDocumento.RECEBIDO);
         if (dao.inserirDocumentoBandeja(documento)) {
             msg.criarMensagemSweet("swal({title: 'Pronto', type: 'success', html: 'O <b>" + documento.getTipoDocumento().getDescricao() + " nº " + documento.getNumeroDocumento() + "</b> foi colocado em sua bandeja'})");
             this.documento = new Documento();
@@ -60,6 +68,7 @@ public class DocumentoBean implements Serializable {
 
 
     }
+
 
     /**
      * Metodo chamado para carregar novamente a lista de documentos
@@ -73,28 +82,51 @@ public class DocumentoBean implements Serializable {
 
     /**
      * Método para carregar a lista contendo todos os departamentos
+     * Carrega quantidade de cada documento para exibir na dashboard
      */
     @PostConstruct
-    public void inicializarListaDepartamentos() {
+    public void inicializarListaDocumentos() {
         if (this.todosDocumentos == null) {
             this.todosDocumentos = new ArrayList<>();
         }
+        if (departamentos == null) {
+            this.departamentos = new ArrayList<>();
+        }
         if (todosDocumentos.isEmpty()) {
             this.todosDocumentos = dao.listarTodosDocumentos();
-        }
+            for (Documento d : todosDocumentos) {
+                if (d.getTipoDocumento().equals(TipoDocumento.PROCESSO)) {
+                    processosDashBoard.add(d);
+                    qtdeProcesso++;
+                }
+                if (d.getTipoDocumento().equals(TipoDocumento.OFICIO)) {
+                    oficiosDashBoard.add(d);
+                    qtdeOficio++;
+                }
+                if (d.getTipoDocumento().equals(TipoDocumento.RC)) {
+                    relatoriosDashBoard.add(d);
+                    qtdeRelatorio++;
+                }
 
-        if(processosDashBoard.isEmpty()){
-            this.processosDashBoard = dao.listarProcessosParaDashBoard();
+            }
         }
-        if(relatoriosDashBoard.isEmpty()){
-            this.relatoriosDashBoard = dao.listarRelatoriosParaDashBoard();
-        }
-        if(oficiosDashBoard.isEmpty()){
-            this.oficiosDashBoard = dao.listarOficiosParaDashBoard();
+        if (departamentos.isEmpty()) {
+            this.departamentos = deptoDao.listarTodosDepartamentos();
         }
     }
 
+    public void despacharDocumento() {
+        documentoSelecionado.setStatusDocumento(StatusDocumento.PENDENTE);
+        documentoSelecionado.setDepartamento(departamentoParaDespacho);
+        dao.despacharDocumento(documentoSelecionado);
+        this.documentoSelecionado = new Documento();
+        this.documento = new Documento();
+    }
 
+
+    /**
+     * GETTERS AND SETTERs
+     */
     public Documento getDocumento() {
         return documento;
     }
@@ -173,5 +205,45 @@ public class DocumentoBean implements Serializable {
 
     public void setRelatoriosDashBoard(List<Documento> relatoriosDashBoard) {
         this.relatoriosDashBoard = relatoriosDashBoard;
+    }
+
+    public int getQtdeOficio() {
+        return qtdeOficio;
+    }
+
+    public void setQtdeOficio(int qtdeOficio) {
+        this.qtdeOficio = qtdeOficio;
+    }
+
+    public int getQtdeRelatorio() {
+        return qtdeRelatorio;
+    }
+
+    public void setQtdeRelatorio(int qtdeRelatorio) {
+        this.qtdeRelatorio = qtdeRelatorio;
+    }
+
+    public int getQtdeProcesso() {
+        return qtdeProcesso;
+    }
+
+    public void setQtdeProcesso(int qtdeProcesso) {
+        this.qtdeProcesso = qtdeProcesso;
+    }
+
+    public List<Departamento> getDepartamentos() {
+        return departamentos;
+    }
+
+    public void setDepartamentos(List<Departamento> departamentos) {
+        this.departamentos = departamentos;
+    }
+
+    public Departamento getDepartamentoParaDespacho() {
+        return departamentoParaDespacho;
+    }
+
+    public void setDepartamentoParaDespacho(Departamento departamentoParaDespacho) {
+        this.departamentoParaDespacho = departamentoParaDespacho;
     }
 }

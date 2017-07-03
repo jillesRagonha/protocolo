@@ -9,50 +9,6 @@
     <ui:define name="head">
 
 
-        <style type="text/css">
-            .cars-datalist .text-column p:last-child {
-                color: #757575;
-            }
-
-            .cars-datalist .car-item i, .cars-datalist .car-item .car-details {
-                display: inline-block;
-                vertical-align: middle;
-            }
-
-            .cars-datalist .car-item button {
-                float: right;
-            }
-
-            .cars-datalist ul {
-                margin: 0;
-                padding: 0;
-            }
-
-            .ui-car-display td:last-child {
-                font-weight: 700;
-            }
-
-            .cars-datalist .ui-icon-directions-car {
-                font-size: 48px;
-                color: #757575;
-                margin: -28px 48px 0 24px;
-            }
-
-            @media (max-width: 640px) {
-                .cars-datalist .text-column {
-                    text-align: center;
-                }
-
-                .ui-tree-demo {
-                    width: 240px;
-                }
-
-                .cars-datalist .ui-icon-directions-car {
-                    margin-left: 10px;
-                    margin-right: 35px;
-                }
-            }
-        </style>
     </ui:define>
 
     <ui:define name="title">Todos Documentos</ui:define>
@@ -67,63 +23,74 @@
                         <p:growl id="msgs" showDetail="true"/>
 
                         <p:dataTable var="doc" widgetVar="tabelaDepartamento" paginator="true" id="tabela"
-                                     rows="20" value="#{documentoBean.todosDocumentos}"
-                                     rowKey="#{doc.idDocumento}"
-                                     emptyMessage="Nenhum Documento foi encontrado">
+                                     rows="10" value="#{documentoBean.todosDocumentos}"
+                                     rowKey="#{doc.idDocumento}" emptyMessage="Nenhum Documento foi encontrado">
 
                             <f:facet name="header">
                                 Bandeja
                             </f:facet>
 
                             <p:column headerText="Identificador"
-                                      sortBy="#{doc.idDocumento}" width="15%">
+                                      sortBy="#{doc.idDocumento}" width="10%">
                                 <p:outputLabel value=" #{doc.idDocumento}"/>
                             </p:column>
 
-
-                            <p:column headerText="Tipo Documento" sortBy="#{doc.tipoDocumento.descricao}"
-                                      filterBy="#{doc.tipoDocumento.descricao}" filterMatchMode="contains">
+                            <p:column headerText="Tipo" sortBy="#{doc.tipoDocumento.descricao}"
+                                      filterBy="#{doc.tipoDocumento.descricao}" filterMatchMode="contains" width="10%">
                                 <h:outputText value="#{doc.tipoDocumento.descricao}"/>
-
                             </p:column>
 
-                            <p:column headerText="Departamento Atual" sortBy="#{doc.departamento.nomeDepartamento}" filterBy="#{doc.departamento.nomeDepartamento}" filterMatchMode="contains">
+
+                            <p:column headerText="Departamento Atual" sortBy="#{doc.departamento.nomeDepartamento}"
+                                      filterBy="#{doc.departamento.nomeDepartamento}" filterMatchMode="contains"
+                                      width="15%">
                                 #{doc.departamento.nomeDepartamento}
                             </p:column>
 
-                            <p:column headerText="Nº" sortBy="#{doc.numeroDocumento}" filterBy="#{doc.numeroDocumento}" filterMatchMode="contains">
+                            <p:column headerText="Nº" sortBy="#{doc.numeroDocumento}" filterBy="#{doc.numeroDocumento}"
+                                      filterMatchMode="contains" width="10%">
                                 #{doc.numeroDocumento}
                             </p:column>
 
-                            <p:column headerText="Assunto" sortBy="#{doc.assunto}" filterBy="#{doc.assunto}" filterMatchMode="contains">
+                            <p:column headerText="Assunto" sortBy="#{doc.assunto}" filterBy="#{doc.assunto}"
+                                      filterMatchMode="contains">
                                 #{doc.assunto}
                             </p:column>
 
-                            <p:column headerText="Ações" width="7%">
+                            <p:column headerText="Ações" width="12%" style="text-align: center">
                                 <span>
                                     <p:commandButton process="tabela"
                                                      update=":form_data_todos_documentos:documentoDetail"
-                                                     icon="ui-icon-search" oncomplete="PF('documentoDialog').show()">
+                                                     icon="ui-icon-create" oncomplete="PF('documentoDialog').show()">
                                         <f:setPropertyActionListener value="#{doc}"
                                                                      target="#{documentoBean.documentoSelecionado}"/>
                                     </p:commandButton>
                                 </span>
                                 <span style="margin-left: 5px">
                                 <p:commandButton process="tabela"
-                                                 update=":form_remover:departamentoRemover"
+                                                 update=":form_remover:documentoRemover"
                                                  icon="ui-icon-delete" styleClass="red-btn"
                                                  oncomplete="PF('departamentoRemove').show()">
                                     <f:setPropertyActionListener value="#{doc}"
                                                                  target="#{documentoBean.documentoSelecionado}"/>
                                 </p:commandButton>
                                 </span>
+                                <span style="margin-left: 5px">
+                                    <p:commandButton process="tabela" styleClass="green-btn"
+                                                     update=":form_despachar_documento:documentoDespachar"
+                                                     icon="ui-icon-forward" oncomplete="PF('despachoDocumento').show()">
+                                        <f:setPropertyActionListener value="#{doc}"
+                                                                     target="#{documentoBean.documentoSelecionado}"/>
+                                    </p:commandButton>
+                                </span>
 
                             </p:column>
 
 
                         </p:dataTable>
-                        
-                        <!-- TODO completar dialogs e decidir se será possivel edição ou não -->
+
+
+                        <!-- TODO completar dialogs com método para atualizar o documento e decidir se será possivel edição ou não -->
                         <p:dialog header="Documento" widgetVar="documentoDialog" modal="true" showEffect="fade"
                                   resizable="false">
                             <p:outputPanel id="documentoDetail" style="text-align: center;">
@@ -131,43 +98,82 @@
                                     <h:inputHidden value="#{documentoBean.documentoSelecionado.idDocumento}"/>
 
                                     <h:panelGroup styleClass="md-inputfield ">
-                                        <p:inputText value="#{documentoBean.documentoSelecionado.tipoDocumento.descricao}"  disabled="true"/>
+                                        <p:inputText
+                                                value="#{documentoBean.documentoSelecionado.tipoDocumento.descricao}"
+                                                disabled="true"/>
                                         <label>Documento</label>
-
                                     </h:panelGroup>
+
                                     <h:panelGroup styleClass="md-inputfield myIconClass">
-                                        <p:inputText value="#{departamentoBean.departamentoSelecionado.email}"/>
-                                        <label>Email</label>
+                                        <p:inputText
+                                                value="#{documentoBean.documentoSelecionado.departamento.nomeDepartamento}"
+                                                disabled="true"/>
+                                        <label>Departamento</label>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup styleClass="md-inputfield myIconClass">
+                                        <p:inputText value="#{documentoBean.documentoSelecionado.remetente}"/>
+                                        <label>Remetente</label>
                                     </h:panelGroup>
                                     <h:panelGroup styleClass="md-inputfield myIconClass">
                                         <p:inputText
-                                                value="#{departamentoBean.departamentoSelecionado.pessoaResponsavel}"/>
-                                        <label>Pessoa Responsável</label>
+                                                value="#{documentoBean.documentoSelecionado.numeroDocumento}"/>
+                                        <label>Nº Documento</label>
                                     </h:panelGroup>
-                                    <p:commandButton value="Gravar" action="#{departamentoBean.alterarDepartamento}"
+
+
+                                    <h:panelGroup styleClass="md-inputfield myIconClass">
+                                        <p:inputText
+                                                value="#{documentoBean.documentoSelecionado.assunto}"/>
+                                        <label>Assunto</label>
+                                    </h:panelGroup>
+
+
+                                    <p:commandButton value="Gravar" action="#{documentoBean.alterarDocumento}"
                                                      id="cmdAlterar" update="@form"/>
                                     <p:defaultCommand target="cmdAlterar"/>
                                 </p:panelGrid>
 
                             </p:outputPanel>
                         </p:dialog>
-
-
                     </h:form>
+
                     <h:form id="form_remover">
-                        <!-- TODO completar dialogs e decidir se será possivel edição ou não -->
+                        <!-- TODO completar dialogs e criar o método que irá remover o documento -->
                         <p:dialog header="Confirmação" widgetVar="departamentoRemove" modal="true" showEffect="fade"
                                   resizable="false">
-                            <p:outputPanel id="departamentoRemover" style="text-align: center">
-                                <h:inputHidden value="#{departamentoBean.departamentoSelecionado.id}"/>
-                                Tem certeza que deseja remover o departamento
-                                <b>#{departamentoBean.departamentoSelecionado.nomeDepartamento}?</b>
+                            <p:outputPanel id="documentoRemover" style="text-align: center">
+                                <h:inputHidden value="#{documentoBean.documentoSelecionado.idDocumento}"/>
+                                Tem certeza que deseja remover o Documento
+                                <b>#{documentoBean.documentoSelecionado.tipoDocumento.descricao} nº #{documentoBean.documentoSelecionado.numeroDocumento} - #{documentoBean.documentoSelecionado.assunto }?</b>
                                 <br/><br/><br/>
                                 <p:commandButton value="Sim - Quero Apagar" icon="ui-icon-delete" styleClass="red-btn"
                                                  action="#{departamentoBean.removerDepartamento}"
                                                  update=":form_data_todos_documentos:tabela :form_remover"/>
                                 <p:commandButton value="Não - Não quero apagar" style="margin-left: 5px"
                                                  update="@form"/>
+                            </p:outputPanel>
+                        </p:dialog>
+                    </h:form>
+
+                    <h:form id="form_despachar_documento">
+                        <p:dialog header="Encaminhar" widgetVar="despachoDocumento" modal="true" showEffect="fade"
+                                  resizable="false">
+                            <p:outputPanel id="documentoDespachar">
+                                <h:inputHidden value="#{documentoBean.documentoSelecionado.idDocumento}"/>
+                                Encaminhar o
+                                <b>#{documentoBean.documentoSelecionado.tipoDocumento.descricao} nº #{documentoBean.documentoSelecionado.numeroDocumento}</b> para:
+                                <br/><br/><br/>
+                                <p:selectOneMenu id="selectDepartamento"
+                                                 value="#{documentoBean.departamentoParaDespacho}">
+                                    <f:selectItems value="#{documentoBean.departamentos}" var="depto"
+                                                   itemLabel="#{depto.nomeDepartamento}" itemValue="#{depto}" />
+                                </p:selectOneMenu>
+
+                                <p:separator />
+
+                                <p:commandButton value="Despachar" action="#{documentoBean.despacharDocumento}"
+                                                 update="@form" ajax = "false"/>
                             </p:outputPanel>
                         </p:dialog>
                     </h:form>

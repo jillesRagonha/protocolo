@@ -80,4 +80,9 @@ public class DepartamentoDao implements Serializable {
         }
         return apagado;
     }
+
+    public Departamento buscarDepartamentoPorId(int id) {
+        Departamento departamento = manager.find(Departamento.class, id);
+        return departamento;
+    }
 }
