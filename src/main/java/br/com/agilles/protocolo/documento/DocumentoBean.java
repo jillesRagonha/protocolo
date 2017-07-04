@@ -47,11 +47,6 @@ public class DocumentoBean implements Serializable {
     private Departamento departamentoParaDespacho;
 
 
-    public void verDocumentoSelecionado(Documento processo) {
-        msg.criarMensagemSweet("swal({title: 'Pronto', type: 'success', html: 'O <b>" + processo.getTipoDocumento().getDescricao() + " nº " + processo.getNumeroDocumento() + "</b> Esta aqui'})");
-
-    }
-
     /**
      * Método que será chamado quando o usuário receber um novo documento e precisar inserir ele no sistema
      *
@@ -66,8 +61,6 @@ public class DocumentoBean implements Serializable {
             return "";
         }
         return "";
-
-
     }
 
 
@@ -111,7 +104,6 @@ public class DocumentoBean implements Serializable {
                 if (d.getStatusDocumento().equals(StatusDocumento.PENDENTE)) {
                     qtdePendencias++;
                 }
-
             }
         }
         if (departamentos.isEmpty()) {
@@ -119,13 +111,19 @@ public class DocumentoBean implements Serializable {
         }
     }
 
-    public void despacharDocumento() {
+    public String despacharDocumento() {
         if (dao.despacharDocumento(documentoSelecionado, departamentoParaDespacho)) {
-            msg.criarMensagemSweet("swal({title: 'Pronto', type: 'success', html: 'O documento foi despachado'})");
+            todosDocumentos = new ArrayList<>();
+            todosDocumentos = dao.listarTodosDocumentosParaDepartamentoLogado();
+            criarMensagemDespacho("swal({title: 'Pronto', type: 'success', html: 'O documento foi despachado'})");
         }
         this.documentoSelecionado = new Documento();
         this.documento = new Documento();
-        this.departamentoParaDespacho = new Departamento();
+        return "";
+    }
+
+    private void criarMensagemDespacho(String s) {
+        msg.criarMensagemSweet(s);
     }
 
 
