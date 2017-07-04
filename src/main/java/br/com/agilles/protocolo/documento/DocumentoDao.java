@@ -51,9 +51,11 @@ public class DocumentoDao implements Serializable {
     public List<Documento> listarTodosDocumentosParaDepartamentoLogado() {
         List<Documento> documentos = new ArrayList<>();
         try {
-            TypedQuery<Documento> typedQuery = manager.createQuery("SELECT d from Documento d where d.departamento = :pDepartamento and d.statusDocumento = :pstatus", Documento.class);
+            TypedQuery<Documento> typedQuery = manager.createQuery("SELECT d from Documento d where d.departamento = :pDepartamento and (d.statusDocumento = :pstatus or d.statusDocumento = :pstatus2)", Documento.class);
             typedQuery.setParameter("pDepartamento", usuarioBean.getUsuario().getDepartamento());
             typedQuery.setParameter("pstatus", StatusDocumento.RECEBIDO);
+            typedQuery.setParameter("pstatus2", StatusDocumento.DESPACHADO);
+
             documentos = typedQuery.getResultList();
         } catch (Exception e) {
             e.printStackTrace();
@@ -101,5 +103,21 @@ public class DocumentoDao implements Serializable {
             e.printStackTrace();
         }
         return documentos;
+    }
+
+    public boolean aceitarPendencia(Documento documentoPendenteSelecionado) {
+        boolean resolvido = false;
+        Documento doc = new Documento();
+        try {
+            manager.getTransaction().begin();
+            doc = manager.find(Documento.class, documentoPendenteSelecionado.getIdDocumento());
+            doc.setStatusDocumento(StatusDocumento.DESPACHADO);
+            manager.merge(doc);
+            manager.getTransaction().commit();
+            resolvido = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resolvido;
     }
 }

@@ -30,7 +30,7 @@
                 font-weight: 700;
             }
 
-            .cars-datalist .ui-icon-event-note {
+            .cars-datalist .ui-icon-book {
                 font-size:48px;
                 color:#757575;
                 margin:-28px 48px 0 24px;
@@ -41,11 +41,7 @@
                     text-align: center;
                 }
 
-                .ui-tree-demo {
-                    width: 240px;
-                }
-
-                .cars-datalist .ui-icon-directions-car {
+                .cars-datalist .ui-icon-book {
                     margin-left: 10px;
                     margin-right: 35px;
                 }
@@ -60,18 +56,19 @@
                     <h1>Documentos Pendentes</h1>
                     <h:form id="pendencias_form">
                         <p:dataList value="#{documentoBean.documentosPendentes}" var="doc" type="unordered" itemType="none"
-                                    paginator="true" rows="7" styleClass="cars-datalist">
+                                    paginator="true" rows="7" styleClass="cars-datalist" emptyMessage="Nenhuma Pendência encontrada">
 
                             <f:facet name="header">
                                 Documentos pendentes para ser aceito
                             </f:facet>
                             <div style="border-bottom: 1px solid #d8d8d8" class="clearfix car-item">
-                                <i class="ui-icon ui-icon-event-note"></i>
+                                <i class="ui-icon ui-icon-book"></i>
                                 <div class="car-details">
+                                    <h:inputHidden value="#{doc.idDocumento}"/>
                                     <p><b>#{doc.tipoDocumento.descricao} - nº: #{doc.numeroDocumento}</b></p>
                                     <p style="color:#757575">#{doc.origem} - #{doc.assunto}</p>
                                 </div>
-                                <p:commandButton update="@form"  title="Receber" icon="ui-icon-thumb-up" style="margin:24px 24px 0 0">
+                                <p:commandButton update="@all"  title="Receber" icon="ui-icon-thumb-up" style="margin:24px 24px 0 0" action="#{documentoBean.aceitarPendencia}" >
                                     <f:setPropertyActionListener value="#{doc}" target="#{documentoBean.documentoPendenteSelecionado}" />
                                 </p:commandButton>
                             </div>

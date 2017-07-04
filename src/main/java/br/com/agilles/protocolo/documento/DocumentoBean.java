@@ -124,6 +124,10 @@ public class DocumentoBean implements Serializable {
 //     qtdePendencias = dao.listarTodosDocumentosPendentes().size();
     }
 
+    /**
+     * Método a ser chamado quando o usuário for despachar um documento para outro departamento
+     * @return
+     */
     public String despacharDocumento() {
         if (dao.despacharDocumento(documentoSelecionado, departamentoParaDespacho)) {
             todosDocumentos = new ArrayList<>();
@@ -132,6 +136,17 @@ public class DocumentoBean implements Serializable {
         }
         this.documentoSelecionado = new Documento();
         this.documento = new Documento();
+        return "";
+    }
+
+    public String aceitarPendencia(){
+        if(dao.aceitarPendencia(documentoPendenteSelecionado)){
+            criarMensagemDespacho("swal({title: 'Pronto', type: 'success', html: 'Pendência pronta'})");
+            this.documentoPendenteSelecionado = new Documento();
+            this.documentosPendentes = new ArrayList<>();
+            this.documentosPendentes = dao.listarTodosDocumentosPendentes();
+            this.qtdePendencias = documentosPendentes.size();
+        }
         return "";
     }
 
