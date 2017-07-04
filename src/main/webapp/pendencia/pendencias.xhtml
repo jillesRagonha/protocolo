@@ -5,28 +5,21 @@
                 xmlns:p="http://primefaces.org/ui"
                 template="/WEB-INF/template.xhtml">
 
+    <ui:define name="title">Página Inicial</ui:define>
 
-    <ui:define name="head">
-
-
-    </ui:define>
-
-    <ui:define name="title">Minhas Pendências</ui:define>
     <ui:define name="content">
+        <div class="ui-g dashboard">
+            <div class="ui-g-12 ui-md-6 ui-lg-6">
+                <div class="card card-w-title">
+                    <h1>Documentos Pendentes</h1>
+                    <h:form id="pendencias_form">
 
-        <div class="ui-g" style="margin: 0px auto">
-            <div class="ui-g-12">
-                <div class="card card-w-title ui-g-9">
-                    <h1>Pendências</h1>
 
 
-
+                    </h:form>
                 </div>
             </div>
+
         </div>
-
-
     </ui:define>
-
-
 </ui:composition>

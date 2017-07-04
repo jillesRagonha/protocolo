@@ -44,14 +44,16 @@ public class DocumentoDao implements Serializable {
     }
 
     /**
-     * Método que traz todos os documentos já cadastrados no banco de dados
+     * Método que traz todos os documentos já cadastrados no banco de dados de acordo com o departamento do usuario logado
+     *
      * @return
      */
     public List<Documento> listarTodosDocumentosParaDepartamentoLogado() {
         List<Documento> documentos = new ArrayList<>();
         try {
-            TypedQuery<Documento> typedQuery = manager.createQuery("SELECT d from Documento d where d.departamento = :pDepartamento", Documento.class);
+            TypedQuery<Documento> typedQuery = manager.createQuery("SELECT d from Documento d where d.departamento = :pDepartamento and d.statusDocumento = :pstatus", Documento.class);
             typedQuery.setParameter("pDepartamento", usuarioBean.getUsuario().getDepartamento());
+            typedQuery.setParameter("pstatus", StatusDocumento.RECEBIDO);
             documentos = typedQuery.getResultList();
         } catch (Exception e) {
             e.printStackTrace();
@@ -59,6 +61,13 @@ public class DocumentoDao implements Serializable {
         return documentos;
     }
 
+    /**
+     * método que será chamado para despachar um documento
+     *
+     * @param documentoSelecionado
+     * @param departamentoParaDespacho
+     * @return
+     */
     public boolean despacharDocumento(Documento documentoSelecionado, Departamento departamentoParaDespacho) {
         boolean despachado = false;
         Documento doc = new Documento();
@@ -81,16 +90,13 @@ public class DocumentoDao implements Serializable {
         return documento;
     }
 
-    public List<Documento> listarTodosDocumentos() {
+    public List<Documento> listarTodosDocumentosPendentes() {
         List<Documento> documentos = new ArrayList<>();
         try {
-            CriteriaBuilder builder = manager.getCriteriaBuilder();
-            CriteriaQuery<Documento> q = builder.createQuery(Documento.class);
-            Root<Documento> root = q.from(Documento.class);
-            q.select(root);
-            TypedQuery<Documento> typedQuery = manager.createQuery(q);
+            TypedQuery<Documento> typedQuery = manager.createQuery("SELECT d from Documento d where d.departamento = :pDepartamento and d.statusDocumento = :pstatus", Documento.class);
+            typedQuery.setParameter("pDepartamento", usuarioBean.getUsuario().getDepartamento());
+            typedQuery.setParameter("pstatus", StatusDocumento.PENDENTE);
             documentos = typedQuery.getResultList();
-
         } catch (Exception e) {
             e.printStackTrace();
         }

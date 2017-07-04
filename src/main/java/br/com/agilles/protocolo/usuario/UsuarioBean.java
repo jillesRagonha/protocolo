@@ -17,6 +17,8 @@ public class UsuarioBean implements Serializable {
     private UsuarioDao dao;
 
 
+
+
     public Usuario getUsuario() {
         return usuario;
     }
@@ -29,4 +31,6 @@ public class UsuarioBean implements Serializable {
         u = dao.completarInformacoesUsuario(u);
         this.usuario = u;
     }
+
+
 }

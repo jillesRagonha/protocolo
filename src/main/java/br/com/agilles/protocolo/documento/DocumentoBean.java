@@ -101,14 +101,14 @@ public class DocumentoBean implements Serializable {
                     relatoriosDashBoard.add(d);
                     qtdeRelatorio++;
                 }
-                if (d.getStatusDocumento().equals(StatusDocumento.PENDENTE)) {
-                    qtdePendencias++;
-                }
             }
+
+
         }
         if (departamentos.isEmpty()) {
             this.departamentos = deptoDao.listarTodosDepartamentos();
         }
+        qtdePendencias = dao.listarTodosDocumentosPendentes().size();
     }
 
     public String despacharDocumento() {
