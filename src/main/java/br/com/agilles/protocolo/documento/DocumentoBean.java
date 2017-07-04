@@ -35,6 +35,9 @@ public class DocumentoBean implements Serializable {
     private int qtdePendencias = 0;
 
     private List<Documento> todosDocumentos = new ArrayList<>();
+    private List<Documento> documentosPendentes = new ArrayList<>();
+    private Documento documentoPendenteSelecionado = new Documento();
+
     private Documento documentoSelecionado = new Documento();
 
     private List<Documento> oficiosDashBoard = new ArrayList<>();  // coleçao para exibir os ultimos 5 oficios na tela inicial
@@ -108,7 +111,17 @@ public class DocumentoBean implements Serializable {
         if (departamentos.isEmpty()) {
             this.departamentos = deptoDao.listarTodosDepartamentos();
         }
-        qtdePendencias = dao.listarTodosDocumentosPendentes().size();
+
+        if(this.documentosPendentes == null){
+            documentosPendentes = new ArrayList<>();
+        }
+        if(documentosPendentes.isEmpty()){
+            documentosPendentes = dao.listarTodosDocumentosPendentes();
+            qtdePendencias = documentosPendentes.size();
+        }
+
+//
+//     qtdePendencias = dao.listarTodosDocumentosPendentes().size();
     }
 
     public String despacharDocumento() {
@@ -256,5 +269,29 @@ public class DocumentoBean implements Serializable {
 
     public void setQtdePendencias(int qtdePendencias) {
         this.qtdePendencias = qtdePendencias;
+    }
+
+    public DepartamentoDao getDeptoDao() {
+        return deptoDao;
+    }
+
+    public void setDeptoDao(DepartamentoDao deptoDao) {
+        this.deptoDao = deptoDao;
+    }
+
+    public List<Documento> getDocumentosPendentes() {
+        return documentosPendentes;
+    }
+
+    public void setDocumentosPendentes(List<Documento> documentosPendentes) {
+        this.documentosPendentes = documentosPendentes;
+    }
+
+    public Documento getDocumentoPendenteSelecionado() {
+        return documentoPendenteSelecionado;
+    }
+
+    public void setDocumentoPendenteSelecionado(Documento documentoPendenteSelecionado) {
+        this.documentoPendenteSelecionado = documentoPendenteSelecionado;
     }
 }

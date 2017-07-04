@@ -5,14 +5,77 @@
                 xmlns:p="http://primefaces.org/ui"
                 template="/WEB-INF/template.xhtml">
 
-    <ui:define name="title">Página Inicial</ui:define>
+    <ui:define name="title">.....::::::Pendências::::::......</ui:define>
+    <ui:define name="head">
+        <style type="text/css">
+            .cars-datalist .text-column p:last-child{
+                color:#757575;
+            }
+
+            .cars-datalist .car-item i, .cars-datalist .car-item .car-details {
+                display: inline-block;
+                vertical-align: middle;
+            }
+
+            .cars-datalist .car-item button {
+                float: right;
+            }
+
+            .cars-datalist ul {
+                margin: 0;
+                padding: 0;
+            }
+
+            .ui-car-display td:last-child {
+                font-weight: 700;
+            }
+
+            .cars-datalist .ui-icon-event-note {
+                font-size:48px;
+                color:#757575;
+                margin:-28px 48px 0 24px;
+            }
+
+            @media (max-width:640px) {
+                .cars-datalist .text-column {
+                    text-align: center;
+                }
+
+                .ui-tree-demo {
+                    width: 240px;
+                }
+
+                .cars-datalist .ui-icon-directions-car {
+                    margin-left: 10px;
+                    margin-right: 35px;
+                }
+            }
+        </style>
+    </ui:define>
 
     <ui:define name="content">
         <div class="ui-g dashboard">
-            <div class="ui-g-12 ui-md-6 ui-lg-6">
+            <div class="ui-g-12 ui-md-9 ui-lg-9" style="margin: 0px auto">
                 <div class="card card-w-title">
                     <h1>Documentos Pendentes</h1>
                     <h:form id="pendencias_form">
+                        <p:dataList value="#{documentoBean.documentosPendentes}" var="doc" type="unordered" itemType="none"
+                                    paginator="true" rows="7" styleClass="cars-datalist">
+
+                            <f:facet name="header">
+                                Documentos pendentes para ser aceito
+                            </f:facet>
+                            <div style="border-bottom: 1px solid #d8d8d8" class="clearfix car-item">
+                                <i class="ui-icon ui-icon-event-note"></i>
+                                <div class="car-details">
+                                    <p><b>#{doc.tipoDocumento.descricao} - nº: #{doc.numeroDocumento}</b></p>
+                                    <p style="color:#757575">#{doc.origem} - #{doc.assunto}</p>
+                                </div>
+                                <p:commandButton update="@form"  title="Receber" icon="ui-icon-thumb-up" style="margin:24px 24px 0 0">
+                                    <f:setPropertyActionListener value="#{doc}" target="#{documentoBean.documentoPendenteSelecionado}" />
+                                </p:commandButton>
+                            </div>
+                        </p:dataList>
 
 
 
