@@ -1,12 +1,13 @@
 package br.com.agilles.protocolo.documento;
 
 import br.com.agilles.protocolo.departamento.Departamento;
-import org.primefaces.barcelona.domain.Document;
+import br.com.agilles.protocolo.usuario.UsuarioBean;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
+import javax.print.Doc;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,8 @@ import java.util.List;
 public class DocumentoDao implements Serializable {
     @Inject
     EntityManager manager;
+    @Inject
+    UsuarioBean usuarioBean;
 
 
     /**
@@ -44,16 +47,12 @@ public class DocumentoDao implements Serializable {
      * Método que traz todos os documentos já cadastrados no banco de dados
      * @return
      */
-    public List<Documento> listarTodosDocumentos() {
+    public List<Documento> listarTodosDocumentosParaDepartamentoLogado() {
         List<Documento> documentos = new ArrayList<>();
         try {
-            CriteriaBuilder builder = manager.getCriteriaBuilder();
-            CriteriaQuery<Documento> q = builder.createQuery(Documento.class);
-            Root<Documento> root = q.from(Documento.class);
-            q.select(root);
-            TypedQuery<Documento> typedQuery = manager.createQuery(q);
+            TypedQuery<Documento> typedQuery = manager.createQuery("SELECT d from Documento d where d.departamento = :pDepartamento", Documento.class);
+            typedQuery.setParameter("pDepartamento", usuarioBean.getUsuario().getDepartamento());
             documentos = typedQuery.getResultList();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -80,5 +79,21 @@ public class DocumentoDao implements Serializable {
     public Documento buscarDocumentoPorId(Long id) {
         Documento documento = manager.find(Documento.class, id);
         return documento;
+    }
+
+    public List<Documento> listarTodosDocumentos() {
+        List<Documento> documentos = new ArrayList<>();
+        try {
+            CriteriaBuilder builder = manager.getCriteriaBuilder();
+            CriteriaQuery<Documento> q = builder.createQuery(Documento.class);
+            Root<Documento> root = q.from(Documento.class);
+            q.select(root);
+            TypedQuery<Documento> typedQuery = manager.createQuery(q);
+            documentos = typedQuery.getResultList();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return documentos;
     }
 }

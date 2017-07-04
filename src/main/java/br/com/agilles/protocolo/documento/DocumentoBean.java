@@ -4,12 +4,10 @@ import br.com.agilles.protocolo.departamento.Departamento;
 import br.com.agilles.protocolo.departamento.DepartamentoDao;
 import br.com.agilles.protocolo.usuario.UsuarioBean;
 import br.com.agilles.protocolo.utils.MensagemUtil;
-import org.primefaces.context.RequestContext;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
-import javax.print.Doc;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +29,10 @@ public class DocumentoBean implements Serializable {
     private List<Departamento> departamentos = new ArrayList<>();
 
 
-    private int qtdeOficio = 0, qtdeRelatorio = 0, qtdeProcesso = 0;
+    private int qtdeOficio = 0;
+    private int qtdeRelatorio = 0;
+    private int qtdeProcesso = 0;
+    private int qtdePendencias = 0;
 
     private List<Documento> todosDocumentos = new ArrayList<>();
     private Documento documentoSelecionado = new Documento();
@@ -76,7 +77,7 @@ public class DocumentoBean implements Serializable {
      */
     private void listarTodosDepartamentos() {
         this.todosDocumentos = new ArrayList<>();
-        this.todosDocumentos = dao.listarTodosDocumentos();
+        this.todosDocumentos = dao.listarTodosDocumentosParaDepartamentoLogado();
     }
 
 
@@ -93,7 +94,7 @@ public class DocumentoBean implements Serializable {
             this.departamentos = new ArrayList<>();
         }
         if (todosDocumentos.isEmpty()) {
-            this.todosDocumentos = dao.listarTodosDocumentos();
+            this.todosDocumentos = dao.listarTodosDocumentosParaDepartamentoLogado();
             for (Documento d : todosDocumentos) {
                 if (d.getTipoDocumento().equals(TipoDocumento.PROCESSO)) {
                     processosDashBoard.add(d);
@@ -106,6 +107,9 @@ public class DocumentoBean implements Serializable {
                 if (d.getTipoDocumento().equals(TipoDocumento.RC)) {
                     relatoriosDashBoard.add(d);
                     qtdeRelatorio++;
+                }
+                if (d.getStatusDocumento().equals(StatusDocumento.PENDENTE)) {
+                    qtdePendencias++;
                 }
 
             }
@@ -246,5 +250,13 @@ public class DocumentoBean implements Serializable {
 
     public void setDepartamentoParaDespacho(Departamento departamentoParaDespacho) {
         this.departamentoParaDespacho = departamentoParaDespacho;
+    }
+
+    public int getQtdePendencias() {
+        return qtdePendencias;
+    }
+
+    public void setQtdePendencias(int qtdePendencias) {
+        this.qtdePendencias = qtdePendencias;
     }
 }
