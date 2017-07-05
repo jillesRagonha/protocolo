@@ -51,7 +51,7 @@ public class DocumentoDao implements Serializable {
     public List<Documento> listarTodosDocumentosParaDepartamentoLogado() {
         List<Documento> documentos = new ArrayList<>();
         try {
-            TypedQuery<Documento> typedQuery = manager.createQuery("SELECT d from Documento d where d.departamento = :pDepartamento and (d.statusDocumento = :pstatus or d.statusDocumento = :pstatus2)", Documento.class);
+            TypedQuery<Documento> typedQuery = manager.createQuery("SELECT d from Documento d where d.departamento = :pDepartamento and (d.statusDocumento = :pstatus or d.statusDocumento = :pstatus2) order by d.idDocumento desc", Documento.class);
             typedQuery.setParameter("pDepartamento", usuarioBean.getUsuario().getDepartamento());
             typedQuery.setParameter("pstatus", StatusDocumento.RECEBIDO);
             typedQuery.setParameter("pstatus2", StatusDocumento.DESPACHADO);

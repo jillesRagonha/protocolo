@@ -93,15 +93,22 @@ public class DocumentoBean implements Serializable {
             this.todosDocumentos = dao.listarTodosDocumentosParaDepartamentoLogado();
             for (Documento d : todosDocumentos) {
                 if (d.getTipoDocumento().equals(TipoDocumento.PROCESSO)) {
-                    processosDashBoard.add(d);
+                    if (processosDashBoard.size() < 4) {
+                        processosDashBoard.add(d);
+                    }
                     qtdeProcesso++;
                 }
                 if (d.getTipoDocumento().equals(TipoDocumento.OFICIO)) {
-                    oficiosDashBoard.add(d);
+                    if (oficiosDashBoard.size() < 4) {
+                        oficiosDashBoard.add(d);
+                    }
+
                     qtdeOficio++;
                 }
                 if (d.getTipoDocumento().equals(TipoDocumento.RC)) {
-                    relatoriosDashBoard.add(d);
+                    if (relatoriosDashBoard.size() < 4) {
+                        relatoriosDashBoard.add(d);
+                    }
                     qtdeRelatorio++;
                 }
             }
@@ -112,10 +119,10 @@ public class DocumentoBean implements Serializable {
             this.departamentos = deptoDao.listarTodosDepartamentos();
         }
 
-        if(this.documentosPendentes == null){
+        if (this.documentosPendentes == null) {
             documentosPendentes = new ArrayList<>();
         }
-        if(documentosPendentes.isEmpty()){
+        if (documentosPendentes.isEmpty()) {
             documentosPendentes = dao.listarTodosDocumentosPendentes();
             qtdePendencias = documentosPendentes.size();
         }
@@ -126,6 +133,7 @@ public class DocumentoBean implements Serializable {
 
     /**
      * Método a ser chamado quando o usuário for despachar um documento para outro departamento
+     *
      * @return
      */
     public String despacharDocumento() {
@@ -139,8 +147,8 @@ public class DocumentoBean implements Serializable {
         return "";
     }
 
-    public String aceitarPendencia(){
-        if(dao.aceitarPendencia(documentoPendenteSelecionado)){
+    public String aceitarPendencia() {
+        if (dao.aceitarPendencia(documentoPendenteSelecionado)) {
             criarMensagemDespacho("swal({title: 'Pronto', type: 'success', html: 'Pendência pronta'})");
             this.documentoPendenteSelecionado = new Documento();
             this.documentosPendentes = new ArrayList<>();
