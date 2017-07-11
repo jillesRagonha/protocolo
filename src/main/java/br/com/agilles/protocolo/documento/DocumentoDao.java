@@ -120,4 +120,14 @@ public class DocumentoDao implements Serializable {
         }
         return resolvido;
     }
+
+    public Long pegarUltimoProtocolo(Documento doc){
+        Documento documento = new Documento();
+        manager.getTransaction().begin();
+        TypedQuery<Documento> typedQuery = manager.createQuery("SELECT d from Documento d order by d.idDocumento desc ", Documento.class).setMaxResults(1);
+        documento =  typedQuery.getSingleResult();
+        manager.getTransaction().commit();
+        return  documento.getNumProtocolo();
+
+    }
 }

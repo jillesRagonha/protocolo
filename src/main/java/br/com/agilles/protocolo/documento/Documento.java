@@ -5,7 +5,10 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -18,11 +21,15 @@ public class Documento implements Serializable {
     private Long idDocumento;
     @Enumerated(EnumType.STRING)
     private TipoDocumento tipoDocumento;
-    @NotEmpty(message = "Número de documento obrigatório")
+
     private String numeroDocumento;
     private Date dataDocumento;
+
+    private Date dataProtocolo;
+
     private String origem;
     private String assunto;
+    private Long numProtocolo;
     private String remetente;
     @OneToOne
     private Departamento departamento;
@@ -152,6 +159,22 @@ public class Documento implements Serializable {
         result = 31 * result + (departamento != null ? departamento.hashCode() : 0);
         result = 31 * result + (statusDocumento != null ? statusDocumento.hashCode() : 0);
         return result;
+    }
+
+    public Long getNumProtocolo() {
+        return numProtocolo;
+    }
+
+    public void setNumProtocolo(Long numProtocolo) {
+        this.numProtocolo = numProtocolo;
+    }
+
+    public Date getDataProtocolo() {
+        return dataProtocolo;
+    }
+
+    public void setDataProtocolo(Date dataProtocolo) {
+        this.dataProtocolo = dataProtocolo;
     }
 }
 

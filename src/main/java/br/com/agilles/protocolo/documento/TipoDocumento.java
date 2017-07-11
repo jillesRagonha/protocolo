@@ -8,6 +8,7 @@ public enum TipoDocumento {
     CI("Comunicação Interna"),
     RC("Relatório de Comunicação"),
     PROCESSO("Processo"),
+    CF("Comunicação de Falta"),
     OUTROS("Outros");
 
     private String descricao;

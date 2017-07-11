@@ -16,7 +16,7 @@
 
         <div class="ui-g" style="margin: 0px auto">
             <div class="ui-g-12">
-                <div class="card card-w-title ui-g-9">
+                <div class="card card-w-title ui-g-11">
                     <h1>Bandeja</h1>
 
                     <h:form id="form_data_todos_documentos">
@@ -30,9 +30,23 @@
                                 Bandeja
                             </f:facet>
 
-                            <p:column headerText="Identificador"
-                                      sortBy="#{doc.idDocumento}" width="10%">
+
+                            <p:column headerText="Id"
+                                      sortBy="#{doc.idDocumento}" width="5%">
                                 <p:outputLabel value=" #{doc.idDocumento}"/>
+                            </p:column>
+                            <p:column headerText="Protocolo" sortBy="#{doc.numProtocolo}" filterBy="#{doc.numProtocolo}" filterMatchMode="contains">
+                                <p:outputLabel value="#{doc.numProtocolo}" />
+                            </p:column>
+                            <p:column headerText="Data Protocolo">
+                                <p:outputLabel value="#{doc.dataProtocolo}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00"/>
+                                </p:outputLabel>
+                            </p:column>
+                            <p:column headerText="Data Papel">
+                                <p:outputLabel value="#{doc.dataDocumento}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </p:outputLabel>
                             </p:column>
 
                             <p:column headerText="Tipo" sortBy="#{doc.tipoDocumento.descricao}"
@@ -41,21 +55,17 @@
                             </p:column>
 
 
-                            <p:column headerText="Departamento Atual" sortBy="#{doc.departamento.nomeDepartamento}"
+                            <p:column headerText="Departamento" sortBy="#{doc.departamento.nomeDepartamento}"
                                       filterBy="#{doc.departamento.nomeDepartamento}" filterMatchMode="contains"
-                                      width="15%">
+                                      width="10%">
                                 #{doc.departamento.nomeDepartamento}
                             </p:column>
 
-                            <p:column headerText="Nº" sortBy="#{doc.numeroDocumento}" filterBy="#{doc.numeroDocumento}"
+                            <p:column headerText="Nº Documento" sortBy="#{doc.numeroDocumento}" filterBy="#{doc.numeroDocumento}"
                                       filterMatchMode="contains" width="10%">
                                 #{doc.numeroDocumento}
                             </p:column>
 
-                            <p:column headerText="Assunto" sortBy="#{doc.assunto}" filterBy="#{doc.assunto}"
-                                      filterMatchMode="contains">
-                                #{doc.assunto}
-                            </p:column>
 
                             <p:column headerText="Ações" width="12%" style="text-align: center">
                                 <span>
@@ -138,6 +148,8 @@
                         </p:dialog>
                     </h:form>
 
+                    <!--TODO sistema não esta editando os documentos, providenciar o término do evento de edição de documentos -->
+
                     <h:form id="form_remover">
                         <!-- TODO completar dialogs e criar o método que irá remover o documento -->
                         <p:dialog header="Confirmação" widgetVar="departamentoRemove" modal="true" showEffect="fade"
@@ -166,11 +178,11 @@
                                 <br/><br/><br/>
                                 <p:selectOneMenu id="selectDepartamento"
                                                  value="#{documentoBean.departamentoParaDespacho}" converter="#{departamentoConverter}">
+                                    <f:selectItem itemValue="" itemLabel="Selecionar" />
                                     <f:selectItems value="#{documentoBean.departamentos}" var="depto"
                                                    itemLabel="#{depto.nomeDepartamento}" itemValue="#{depto}" />
                                 </p:selectOneMenu>
 
-                                <p:separator />
 
                                 <p:commandButton value="Despachar" action="#{documentoBean.despacharDocumento}"
                                                  update="@all" />

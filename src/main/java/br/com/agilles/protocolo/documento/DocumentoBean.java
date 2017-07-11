@@ -9,8 +9,11 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.*;
 
 /**
  * Created by jille on 09/06/2017.
@@ -58,11 +61,17 @@ public class DocumentoBean implements Serializable {
     public String inserirDocumentoBandeja() {
         documento.setDepartamento(usuarioBean.getUsuario().getDepartamento());
         documento.setStatusDocumento(StatusDocumento.RECEBIDO);
-        if (dao.inserirDocumentoBandeja(documento)) {
-            msg.criarMensagemSweet("swal({title: 'Pronto', type: 'success', html: 'O <b>" + documento.getTipoDocumento().getDescricao() + " nº " + documento.getNumeroDocumento() + "</b> foi colocado em sua bandeja'})");
-            this.documento = new Documento();
-            return "";
-        }
+        documento.setDataProtocolo(new Date());
+        Long protocolo = null;
+        protocolo = dao.pegarUltimoProtocolo(documento);
+        if (protocolo > 0)
+            documento.setNumProtocolo(protocolo++);
+            if (dao.inserirDocumentoBandeja(documento)) {
+
+                msg.criarMensagemSweet("swal({title: 'Pronto', type: 'success', html: 'Documento Protocolado conforme número que segue: <b>PROTOCOLO: " + documento.getNumProtocolo()  + "</b> '})");
+                this.documento = new Documento();
+                return "";
+            }
         return "";
     }
 

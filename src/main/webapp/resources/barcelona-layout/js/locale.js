@@ -1,16 +1,16 @@
 /**
  * Created by jille on 20/06/2017.
  */
-PrimeFaces.locales['pt-br'] = {
+PrimeFaces.locales['pt'] = {
     closeText: 'Fechar',
     prevText: 'Anterior',
     nextText: 'Próximo',
     currentText: 'Começo',
-    monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
-    monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun', 'Jul','Ago','Set','Out','Nov','Dez'],
-    dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
-    dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'],
-    dayNamesMin: ['D','S','T','Q','Q','S','S'],
+    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+    dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'],
     weekHeader: 'Semana',
     firstDay: 0,
     isRTL: false,
@@ -25,5 +25,5 @@ PrimeFaces.locales['pt-br'] = {
     month: 'Mês',
     week: 'Semana',
     day: 'Dia',
-    allDayText : 'Todo o Dia'
+    allDayText: 'Todo o Dia'
 };

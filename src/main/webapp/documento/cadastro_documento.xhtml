@@ -19,7 +19,7 @@
     <ui:define name="content">
         <h:form id="form_documento">
             <div class="ui-g ui-fluid">
-                <div class="ui-g-12 ui-lg-6">
+                <div class="ui-g-12 ui-lg-11">
                     <!-- Left Side -->
                     <div class="card card-w-title">
 
@@ -37,7 +37,6 @@
                                                itemLabel="#{tipo.descricao}"/>
                             </p:selectOneRadio>
 
-
                         </div>
                     </div>
 
@@ -46,16 +45,18 @@
 
                         <h1>Dados</h1>
 
-                        <p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank grid-pad"
-                                     style="margin-top:10px; margin-left: 10px">
-                            <p:outputLabel for="button" value="Data:"/>
-                            <p:calendar id="button" showOn="button" pattern="dd/mm/yyyy"
-                                        value="#{documentoBean.documento.dataDocumento}"/>
-                        </p:panelGrid>
+                        <h:panelGroup styleClass="md-inputfield">
+                            <p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank grid-pad"
+                                         style="margin-top:10px; margin-left: 10px">
+                                <p:outputLabel for="button" value="Data:"/>
+                                <p:calendar id="button" showOn="both" locale="pt" pattern="dd/MM/yyyy"
+                                            value="#{documentoBean.documento.dataDocumento}" mask="99/99/9999"/>
+
+                            </p:panelGrid>
+
+                        </h:panelGroup>
 
                         <p:panelGrid columns="2" styleClass="form-group ui-panelgrid-blank" layout="grid">
-
-
                             <h:panelGroup styleClass="md-inputfield ">
                                 <p:inputText value="#{documentoBean.documento.numeroDocumento}"/>
                                 <label>Nº Documento</label>
