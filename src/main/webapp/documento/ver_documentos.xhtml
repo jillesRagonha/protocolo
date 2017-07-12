@@ -35,22 +35,22 @@
                                       sortBy="#{doc.idDocumento}" width="5%">
                                 <p:outputLabel value=" #{doc.idDocumento}"/>
                             </p:column>
-                            <p:column headerText="Protocolo" sortBy="#{doc.numProtocolo}" filterBy="#{doc.numProtocolo}" filterMatchMode="contains">
+                            <p:column headerText="Protocolo" width="5%" sortBy="#{doc.numProtocolo}" filterBy="#{doc.numProtocolo}" filterMatchMode="contains">
                                 <p:outputLabel value="#{doc.numProtocolo}" />
                             </p:column>
-                            <p:column headerText="Data Protocolo">
+                            <p:column headerText="Data Protocolo" width="10%">
                                 <p:outputLabel value="#{doc.dataProtocolo}">
                                     <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-03:00"/>
                                 </p:outputLabel>
                             </p:column>
-                            <p:column headerText="Data Papel">
+                            <p:column headerText="Data Papel" width="10%">
                                 <p:outputLabel value="#{doc.dataDocumento}">
                                     <f:convertDateTime pattern="dd/MM/yyyy" />
                                 </p:outputLabel>
                             </p:column>
 
                             <p:column headerText="Tipo" sortBy="#{doc.tipoDocumento.descricao}"
-                                      filterBy="#{doc.tipoDocumento.descricao}" filterMatchMode="contains" width="10%">
+                                      filterBy="#{doc.tipoDocumento.descricao}" filterMatchMode="contains" width="12%">
                                 <h:outputText value="#{doc.tipoDocumento.descricao}"/>
                             </p:column>
 
@@ -182,6 +182,7 @@
                                     <f:selectItems value="#{documentoBean.departamentos}" var="depto"
                                                    itemLabel="#{depto.nomeDepartamento}" itemValue="#{depto}" />
                                 </p:selectOneMenu>
+                                <br/><br/>
 
 
                                 <p:commandButton value="Despachar" action="#{documentoBean.despacharDocumento}"

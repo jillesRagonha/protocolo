@@ -27,9 +27,22 @@ public class UsuarioBean implements Serializable {
         this.usuario = usuario;
     }
 
+    /**
+     * Método para jogar o usuário logado no sistema
+     * @param u
+     */
     public void logar(Usuario u) {
         u = dao.completarInformacoesUsuario(u);
         this.usuario = u;
+    }
+
+    /**
+     * método para sair , ou efetuar o logout
+     * @return
+     */
+    public String sair(){
+        this.usuario = new Usuario();
+        return "login?faces-redirect=true";
     }
 
 

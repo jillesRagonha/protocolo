@@ -65,7 +65,8 @@ public class DocumentoBean implements Serializable {
         Long protocolo = null;
         protocolo = dao.pegarUltimoProtocolo(documento);
         if (protocolo > 0)
-            documento.setNumProtocolo(protocolo++);
+            protocolo++;
+            documento.setNumProtocolo(protocolo);
             if (dao.inserirDocumentoBandeja(documento)) {
 
                 msg.criarMensagemSweet("swal({title: 'Pronto', type: 'success', html: 'Documento Protocolado conforme número que segue: <b>PROTOCOLO: " + documento.getNumProtocolo()  + "</b> '})");
