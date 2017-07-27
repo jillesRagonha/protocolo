@@ -59,6 +59,9 @@ public class DocumentoBean implements Serializable {
      * @return
      */
     public String inserirDocumentoBandeja() {
+        if (documento.getNumeroDocumento() == null || documento.getNumeroDocumento().isEmpty() || documento.getNumeroDocumento().equals("")) {
+            documento.setNumeroDocumento("INEXISTENTE");
+        }
         documento.setDepartamento(usuarioBean.getUsuario().getDepartamento());
         documento.setStatusDocumento(StatusDocumento.RECEBIDO);
         documento.setDataProtocolo(new Date());
@@ -66,13 +69,14 @@ public class DocumentoBean implements Serializable {
         protocolo = dao.pegarUltimoProtocolo(documento);
         if (protocolo > 0)
             protocolo++;
-            documento.setNumProtocolo(protocolo);
-            if (dao.inserirDocumentoBandeja(documento)) {
+        documento.setNumProtocolo(protocolo);
 
-                msg.criarMensagemSweet("swal({title: 'Pronto', type: 'success', html: 'Documento Protocolado conforme número que segue: <b>PROTOCOLO: " + documento.getNumProtocolo()  + "</b> '})");
-                this.documento = new Documento();
-                return "";
-            }
+
+        if (dao.inserirDocumentoBandeja(documento)) {
+            msg.criarMensagemSweet("swal({title: 'Pronto', type: 'success', html: 'Documento Protocolado conforme número que segue: <b>PROTOCOLO: " + documento.getNumProtocolo() + "</b> '})");
+            this.documento = new Documento();
+            return "";
+        }
         return "";
     }
 
@@ -171,7 +175,6 @@ public class DocumentoBean implements Serializable {
     private void criarMensagemDespacho(String s) {
         msg.criarMensagemSweet(s);
     }
-
 
     /**
      * GETTERS AND SETTERs

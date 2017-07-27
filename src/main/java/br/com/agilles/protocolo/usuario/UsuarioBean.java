@@ -16,9 +16,6 @@ public class UsuarioBean implements Serializable {
     @Inject
     private UsuarioDao dao;
 
-
-
-
     public Usuario getUsuario() {
         return usuario;
     }
@@ -36,6 +33,7 @@ public class UsuarioBean implements Serializable {
         this.usuario = u;
     }
 
+    
     /**
      * método para sair , ou efetuar o logout
      * @return

@@ -18,4 +18,6 @@ public enum StatusDocumento {
     StatusDocumento(String descricao) {
         this.descricao = descricao;
     }
+
+
 }
