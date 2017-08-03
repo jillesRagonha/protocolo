@@ -5,7 +5,7 @@ PrimeFaces.widget.Barcelona = PrimeFaces.widget.BaseWidget.extend({
     
     init: function(cfg) {
         this._super(cfg);
-        this.wrapper = $(document.body).children('.layout-wrapper');
+        this.wrapper = $(document.body).find('.layout-wrapper');
         this.sidebar = this.wrapper.children('.layout-sidebar');
         this.tabMenu = this.jq;
         this.tabMenuNav = this.tabMenu.children('.layout-tabmenu-nav');
@@ -58,13 +58,20 @@ PrimeFaces.widget.Barcelona = PrimeFaces.widget.BaseWidget.extend({
             link.parent().addClass('active-item').siblings('.active-item').removeClass('active-item');
             $this.wrapper.addClass('layout-wrapper-menu-active');
             $this.tabMenuContents.find('.ripple-animate').remove();
-            $this.tabMenuContents.removeClass('layout-tabmenu-content-active').
-                    eq(link.parent().index()).addClass('layout-tabmenu-content-active');
+            $this.tabMenuContents.removeClass('layout-tabmenu-content-active');
             
+            var tabContent = $this.tabMenuContents.eq(link.parent().index());
+            tabContent.addClass('layout-tabmenu-content-active');
+                    
             if(!$this.isOverlayMenu()) {
                 setTimeout(function() {
                     $(window).trigger('resize');
                 }, 310);
+            }
+            
+            var pinbutton = tabContent.find('.menu-pin-button');
+            if(pinbutton.length && !pinbutton.children('i').hasClass('fa-rotate-90')) {
+                $this._saveMenuState(link.parent().index());
             }
             
             $(this).siblings('.layout-tabmenu-tooltip').hide();
@@ -406,7 +413,7 @@ if(PrimeFaces.widget.SelectBooleanButton) {
 
             this.input.trigger('change');
         }
-    };
+    }
     
     PrimeFaces.widget.SelectBooleanButton.prototype.uncheck = function() {
         if(!this.disabled) {
@@ -536,7 +543,8 @@ if(PrimeFaces.widget.AutoComplete) {
             $this.removeItem(event, $(this).parent());
         });
     };
-}
+};
+
 if(PrimeFaces.widget.Calendar) {
     PrimeFaces.widget.Calendar.prototype.bindDateSelectListener = function() {
         var _self = this;
