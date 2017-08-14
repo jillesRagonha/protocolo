@@ -11,10 +11,44 @@ import java.io.Serializable;
 @Named
 @SessionScoped
 public class UsuarioBean implements Serializable {
-    @Inject
+
     private Usuario usuario;
     @Inject
     private UsuarioDao dao;
+
+
+
+    /**
+     * Método para jogar o usuário logado no sistema
+     *
+     * @param u
+     */
+    public void logar(Usuario u) {
+        u = dao.completarInformacoesUsuario(u);
+        this.usuario = u;
+    }
+
+
+    /**
+     * método para sair , ou efetuar o logout
+     *
+     * @return
+     */
+    public String sair() {
+        this.usuario = null;
+        return "login?faces-redirect=true";
+    }
+
+    public boolean isLogado() {
+        return this.usuario != null;
+    }
+
+    public void deslogar() {
+        this.usuario = null;
+
+    }
+
+
 
     public Usuario getUsuario() {
         return usuario;
@@ -23,25 +57,5 @@ public class UsuarioBean implements Serializable {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-
-    /**
-     * Método para jogar o usuário logado no sistema
-     * @param u
-     */
-    public void logar(Usuario u) {
-        u = dao.completarInformacoesUsuario(u);
-        this.usuario = u;
-    }
-
-    
-    /**
-     * método para sair , ou efetuar o logout
-     * @return
-     */
-    public String sair(){
-        this.usuario = new Usuario();
-        return "login?faces-redirect=true";
-    }
-
 
 }

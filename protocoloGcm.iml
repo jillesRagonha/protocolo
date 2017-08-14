@@ -38,6 +38,9 @@
         <naming-strategy-map />
       </configuration>
     </facet>
+    <facet type="Spring" name="Spring">
+      <configuration />
+    </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
     <output url="file://$MODULE_DIR$/target/classes" />
@@ -80,10 +83,5 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.jboss.spec.javax.ejb:jboss-ejb-api_3.1_spec:1.0.2.Final" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.jboss.spec.javax.servlet:jboss-servlet-api_3.0_spec:1.0.2.Final" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.jboss.spec.javax.faces:jboss-jsf-api_2.1_spec:2.0.9.Final" level="project" />
-    <orderEntry type="library" name="Maven: javax:javaee-web-api:7.0" level="project" />
-    <orderEntry type="library" name="Maven: javax:javaee-web-api:7.0" level="project" />
-    <orderEntry type="library" name="Maven: org.hibernate:hibernate-core:4.3.1.Final" level="project" />
-    <orderEntry type="library" name="Maven: javax:javaee-web-api:7.0" level="project" />
-    <orderEntry type="library" name="Maven: javax:javaee-web-api:7.0" level="project" />
   </component>
 </module>
