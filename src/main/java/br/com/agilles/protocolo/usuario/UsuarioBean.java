@@ -35,8 +35,9 @@ public class UsuarioBean implements Serializable {
      * @return
      */
     public String sair() {
+        deslogar();
         this.usuario = null;
-        return "login?faces-redirect=true";
+        return "/login?faces-redirect=true";
     }
 
     public boolean isLogado() {
@@ -45,11 +46,7 @@ public class UsuarioBean implements Serializable {
 
     public void deslogar() {
         this.usuario = null;
-
     }
-
-
-
     public Usuario getUsuario() {
         return usuario;
     }

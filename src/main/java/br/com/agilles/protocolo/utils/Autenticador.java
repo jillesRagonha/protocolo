@@ -14,7 +14,6 @@ import javax.inject.Inject;
 
 public class Autenticador implements PhaseListener {
 
-
     @Inject
     UsuarioBean usuarioLogado;
 
@@ -26,11 +25,10 @@ public class Autenticador implements PhaseListener {
     public void afterPhase(PhaseEvent phaseEvent) {
         FacesContext context = phaseEvent.getFacesContext();
         String pagina = context.getViewRoot().getViewId();
-        if (pagina.contains("login.xhtml")) {
+        if (pagina.equals("/login.xhtml")) {
             return;
-        }
-        if (!usuarioLogado.isLogado()) {
-          navigator.redirectTo("login?faces-redirect=true");
+        }else if (!pagina.contains("login.xhtml") && !usuarioLogado.isLogado()) {
+          navigator.redirectTo("/login?faces-redirect=true");
         }
     }
 

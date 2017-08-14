@@ -19,6 +19,7 @@ public class LoginBean implements Serializable {
 
     @Inject
     private UsuarioBean usuarioBean;
+
     private Usuario usuario = new Usuario();
     @Inject
     private UsuarioDao dao;
@@ -38,7 +39,7 @@ public class LoginBean implements Serializable {
             return "home?faces-redirect=true";
         } else {// caso não exista, exibe mensagem de erro para o usuário
             msg.criarMensagem(FacesContext.getCurrentInstance(), FacesMessage.SEVERITY_WARN, "Atenção", "Usuário ou senha incorreto");
-            return "login?faces-redirect=true";
+            return "";
         }
 
     }
@@ -48,8 +49,6 @@ public class LoginBean implements Serializable {
         return "login?faces-redirect=true";
 
     }
-
-
     //getters and setters
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
