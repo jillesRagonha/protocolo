@@ -59,9 +59,7 @@ public class DocumentoBean implements Serializable {
      * @return
      */
     public String inserirDocumentoBandeja() {
-        if (documento.getNumeroDocumento() == null || documento.getNumeroDocumento().isEmpty() || documento.getNumeroDocumento().equals("")) {
-            documento.setNumeroDocumento("INEXISTENTE");
-        }
+
         documento.setDepartamento(usuarioBean.getUsuario().getDepartamento());
         documento.setStatusDocumento(StatusDocumento.RECEBIDO);
         documento.setDataProtocolo(new Date());
@@ -70,7 +68,9 @@ public class DocumentoBean implements Serializable {
         if (protocolo > 0)
             protocolo++;
         documento.setNumProtocolo(protocolo);
-
+        if (documento.getNumeroDocumento() == null || documento.getNumeroDocumento().isEmpty() || documento.getNumeroDocumento().equals("")) {
+            documento.setNumeroDocumento(documento.getNumProtocolo().toString());
+        }
 
         if (dao.inserirDocumentoBandeja(documento)) {
             msg.criarMensagemSweet("swal({title: 'Pronto', type: 'success', html: 'Documento Protocolado conforme número que segue: <b>PROTOCOLO: " + documento.getNumProtocolo() + "</b> '})");
@@ -88,6 +88,18 @@ public class DocumentoBean implements Serializable {
     private void listarTodosDepartamentos() {
         this.todosDocumentos = new ArrayList<>();
         this.todosDocumentos = dao.listarTodosDocumentosParaDepartamentoLogado();
+    }
+
+    public String alterarDocumento() {
+        try {
+            if (dao.alterarDocumento(this.documentoSelecionado)) {
+                criarMensagemAtualizacao();
+                return "";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
 
@@ -174,6 +186,18 @@ public class DocumentoBean implements Serializable {
 
     private void criarMensagemDespacho(String s) {
         msg.criarMensagemSweet(s);
+    }
+
+    private void criarMensagemAtualizacao() {
+        msg.criarMensagemSweet("swal({title: 'Sucesso', type: 'success', html: 'O documento <b> " + documentoSelecionado.getNumeroDocumento()+ "</b> foi alterado'})");
+        limparDocumento(documentoSelecionado);
+
+    }
+
+    private void limparDocumento(Documento documentoSelecionado) {
+        this.documentoSelecionado = new Documento();
+        this.documento = new Documento();
+        this.msg = new MensagemUtil();
     }
 
     /**

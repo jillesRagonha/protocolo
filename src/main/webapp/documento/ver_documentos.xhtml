@@ -115,6 +115,7 @@
                                     </h:panelGroup>
 
                                     <h:panelGroup styleClass="md-inputfield myIconClass">
+
                                         <p:inputText
                                                 value="#{documentoBean.documentoSelecionado.departamento.nomeDepartamento}"
                                                 disabled="true"/>
@@ -176,7 +177,7 @@
                                 Encaminhar o
                                 <b>#{documentoBean.documentoSelecionado.tipoDocumento.descricao} nº #{documentoBean.documentoSelecionado.numeroDocumento}</b> para:
                                 <br/><br/><br/>
-                                <p:selectOneMenu id="selectDepartamento"
+                                <p:selectOneMenu id="selectDepartamento" required="true" requiredMessage="Favor selecionar o departamento"
                                                  value="#{documentoBean.departamentoParaDespacho}" converter="#{departamentoConverter}">
                                     <f:selectItem itemValue="" itemLabel="Selecionar" />
                                     <f:selectItems value="#{documentoBean.departamentos}" var="depto"

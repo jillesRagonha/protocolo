@@ -121,13 +121,50 @@ public class DocumentoDao implements Serializable {
         return resolvido;
     }
 
-    public Long pegarUltimoProtocolo(Documento doc){
+    public Long pegarUltimoProtocolo(Documento doc) {
         Documento documento = new Documento();
         manager.getTransaction().begin();
         TypedQuery<Documento> typedQuery = manager.createQuery("SELECT d from Documento d order by d.idDocumento desc ", Documento.class).setMaxResults(1);
-        documento =  typedQuery.getSingleResult();
+        documento = typedQuery.getSingleResult();
         manager.getTransaction().commit();
-        return  documento.getNumProtocolo();
+        return documento.getNumProtocolo();
 
+    }
+
+    public List<Documento> listarTodosDocumentos() {
+        List<Documento> documentos = new ArrayList<>();
+        try {
+
+            CriteriaBuilder builder = manager.getCriteriaBuilder();
+            CriteriaQuery<Documento> q = builder.createQuery(Documento.class);
+            Root<Documento> root = q.from(Documento.class);
+            q.select(root);
+            q.orderBy(builder.desc(root.get("idDocumento")), builder.asc(root.get("idDocumento")));
+            TypedQuery<Documento> typedQuery = manager.createQuery(q);
+            documentos = typedQuery.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return documentos;
+
+    }
+
+    public boolean alterarDocumento(Documento documentoSelecionado) {
+        boolean alterado = false;
+        Long id = documentoSelecionado.getIdDocumento();
+        Documento doc = manager.find(Documento.class, id);
+        doc.setNumeroDocumento(documentoSelecionado.getNumeroDocumento());
+        doc.setRemetente(documentoSelecionado.getRemetente());
+        doc.setAssunto(documentoSelecionado.getAssunto());
+
+        try {
+            manager.getTransaction().begin();
+            manager.merge(doc);
+            manager.getTransaction().commit();
+            alterado = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return alterado;
     }
 }

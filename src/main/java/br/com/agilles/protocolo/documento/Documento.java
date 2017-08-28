@@ -4,6 +4,7 @@ import br.com.agilles.protocolo.departamento.Departamento;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Calendar;
@@ -19,17 +20,24 @@ public class Documento implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idDocumento;
+    @NotNull(message = "Escolha qual o tipo de documento")
     @Enumerated(EnumType.STRING)
     private TipoDocumento tipoDocumento;
 
     private String numeroDocumento;
+
+    @NotNull(message = "Por favor, insira a data do documento")
     private Date dataDocumento;
 
     private Date dataProtocolo;
 
+    @NotEmpty(message = "Insira a origem do Documento")
     private String origem;
+
+    @NotEmpty(message = "Informe o assunto do Documento")
     private String assunto;
     private Long numProtocolo;
+    @NotEmpty(message = "Insira o nome do remetente")
     private String remetente;
     @OneToOne
     private Departamento departamento;
@@ -132,33 +140,12 @@ public class Documento implements Serializable {
 
         Documento documento = (Documento) o;
 
-        if (idDocumento != null ? !idDocumento.equals(documento.idDocumento) : documento.idDocumento != null)
-            return false;
-        if (tipoDocumento != documento.tipoDocumento) return false;
-        if (numeroDocumento != null ? !numeroDocumento.equals(documento.numeroDocumento) : documento.numeroDocumento != null)
-            return false;
-        if (dataDocumento != null ? !dataDocumento.equals(documento.dataDocumento) : documento.dataDocumento != null)
-            return false;
-        if (origem != null ? !origem.equals(documento.origem) : documento.origem != null) return false;
-        if (assunto != null ? !assunto.equals(documento.assunto) : documento.assunto != null) return false;
-        if (remetente != null ? !remetente.equals(documento.remetente) : documento.remetente != null) return false;
-        if (departamento != null ? !departamento.equals(documento.departamento) : documento.departamento != null)
-            return false;
-        return statusDocumento == documento.statusDocumento;
+        return idDocumento.equals(documento.idDocumento);
     }
 
     @Override
     public int hashCode() {
-        int result = idDocumento != null ? idDocumento.hashCode() : 0;
-        result = 31 * result + (tipoDocumento != null ? tipoDocumento.hashCode() : 0);
-        result = 31 * result + (numeroDocumento != null ? numeroDocumento.hashCode() : 0);
-        result = 31 * result + (dataDocumento != null ? dataDocumento.hashCode() : 0);
-        result = 31 * result + (origem != null ? origem.hashCode() : 0);
-        result = 31 * result + (assunto != null ? assunto.hashCode() : 0);
-        result = 31 * result + (remetente != null ? remetente.hashCode() : 0);
-        result = 31 * result + (departamento != null ? departamento.hashCode() : 0);
-        result = 31 * result + (statusDocumento != null ? statusDocumento.hashCode() : 0);
-        return result;
+        return idDocumento.hashCode();
     }
 
     public Long getNumProtocolo() {
@@ -176,6 +163,8 @@ public class Documento implements Serializable {
     public void setDataProtocolo(Date dataProtocolo) {
         this.dataProtocolo = dataProtocolo;
     }
+
+
 }
 
 
